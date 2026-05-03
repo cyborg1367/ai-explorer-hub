@@ -28,7 +28,7 @@ function TeacherDashboard() {
       </header>
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <KpiCard icon={<Users className="h-5 w-5" />} label="Classes" value={String(TEACHER_CLASSES.length)} hint="active" />
+        <KpiCard icon={<Users className="h-5 w-5" />} label="Classes" value={String(allClasses.length)} hint="active" />
         <KpiCard icon={<Users className="h-5 w-5" />} label="Students" value={String(totalStudents)} hint="across classes" />
         <KpiCard icon={<Activity className="h-5 w-5" />} label="Attempts" value={String(totalAttempts)} hint="this week" />
         <KpiCard icon={<BarChart3 className="h-5 w-5" />} label="Avg accuracy" value="78%" hint="↑ 6% vs last week" />
