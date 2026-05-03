@@ -274,3 +274,28 @@ export const TEACHER_CLASSES = [
   { id: "5b", name: "Grade 5B Critical Thinkers", code: "AI-2244", students: 22, attempts: 318, latest: "1 hour ago" },
   { id: "6a", name: "Grade 6A Explorers", code: "AI-3091", students: 19, attempts: 256, latest: "Yesterday" },
 ];
+
+export const EMPTY_CLASS = {
+  id: "empty",
+  name: "Grade 7 Pilot",
+  code: "AI-7700",
+  students: 0,
+  attempts: 0,
+  latest: "—",
+};
+
+export interface EarnedSkill {
+  id: string;
+  name: SkillCategory;
+  level: "Bronze" | "Silver" | "Gold";
+  emoji: string;
+  earnedOn: string;
+}
+
+export const EARNED_SKILLS: EarnedSkill[] = [
+  { id: "es1", name: "Critical Thinking", level: "Silver", emoji: "🧠", earnedOn: "Today" },
+  { id: "es2", name: "Fact Checking", level: "Bronze", emoji: "🔎", earnedOn: "Yesterday" },
+  { id: "es3", name: "Question Quality", level: "Bronze", emoji: "❓", earnedOn: "2 days ago" },
+];
+
+export const EXISTING_CLASS_CODES = ["AI-1020", "AI-2244", "AI-3091"];
