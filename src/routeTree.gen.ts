@@ -15,6 +15,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StudentIndexRouteImport } from './routes/student.index'
 import { Route as StudentGamesRouteImport } from './routes/student.games'
+import { Route as StudentGamesTrustLightRouteImport } from './routes/student.games.trust-light'
 
 const TeacherRoute = TeacherRouteImport.update({
   id: '/teacher',
@@ -46,21 +47,28 @@ const StudentGamesRoute = StudentGamesRouteImport.update({
   path: '/games',
   getParentRoute: () => StudentRoute,
 } as any)
+const StudentGamesTrustLightRoute = StudentGamesTrustLightRouteImport.update({
+  id: '/trust-light',
+  path: '/trust-light',
+  getParentRoute: () => StudentGamesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/student': typeof StudentRouteWithChildren
   '/teacher': typeof TeacherRoute
-  '/student/games': typeof StudentGamesRoute
+  '/student/games': typeof StudentGamesRouteWithChildren
   '/student/': typeof StudentIndexRoute
+  '/student/games/trust-light': typeof StudentGamesTrustLightRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/teacher': typeof TeacherRoute
-  '/student/games': typeof StudentGamesRoute
+  '/student/games': typeof StudentGamesRouteWithChildren
   '/student': typeof StudentIndexRoute
+  '/student/games/trust-light': typeof StudentGamesTrustLightRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -68,8 +76,9 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/student': typeof StudentRouteWithChildren
   '/teacher': typeof TeacherRoute
-  '/student/games': typeof StudentGamesRoute
+  '/student/games': typeof StudentGamesRouteWithChildren
   '/student/': typeof StudentIndexRoute
+  '/student/games/trust-light': typeof StudentGamesTrustLightRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -80,8 +89,15 @@ export interface FileRouteTypes {
     | '/teacher'
     | '/student/games'
     | '/student/'
+    | '/student/games/trust-light'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/teacher' | '/student/games' | '/student'
+  to:
+    | '/'
+    | '/login'
+    | '/teacher'
+    | '/student/games'
+    | '/student'
+    | '/student/games/trust-light'
   id:
     | '__root__'
     | '/'
@@ -90,6 +106,7 @@ export interface FileRouteTypes {
     | '/teacher'
     | '/student/games'
     | '/student/'
+    | '/student/games/trust-light'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -143,16 +160,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentGamesRouteImport
       parentRoute: typeof StudentRoute
     }
+    '/student/games/trust-light': {
+      id: '/student/games/trust-light'
+      path: '/trust-light'
+      fullPath: '/student/games/trust-light'
+      preLoaderRoute: typeof StudentGamesTrustLightRouteImport
+      parentRoute: typeof StudentGamesRoute
+    }
   }
 }
 
+interface StudentGamesRouteChildren {
+  StudentGamesTrustLightRoute: typeof StudentGamesTrustLightRoute
+}
+
+const StudentGamesRouteChildren: StudentGamesRouteChildren = {
+  StudentGamesTrustLightRoute: StudentGamesTrustLightRoute,
+}
+
+const StudentGamesRouteWithChildren = StudentGamesRoute._addFileChildren(
+  StudentGamesRouteChildren,
+)
+
 interface StudentRouteChildren {
-  StudentGamesRoute: typeof StudentGamesRoute
+  StudentGamesRoute: typeof StudentGamesRouteWithChildren
   StudentIndexRoute: typeof StudentIndexRoute
 }
 
 const StudentRouteChildren: StudentRouteChildren = {
-  StudentGamesRoute: StudentGamesRoute,
+  StudentGamesRoute: StudentGamesRouteWithChildren,
   StudentIndexRoute: StudentIndexRoute,
 }
 
