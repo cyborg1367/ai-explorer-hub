@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, Copy, Users } from "lucide-react";
+import { ArrowLeft, ArrowRight, Copy, Users, UserPlus } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/status-badge";
-import { DEMO_STUDENTS, DEMO_CLASS, TEACHER_CLASSES } from "@/lib/mock-data";
+import { EmptyState } from "@/components/empty-state";
+import { DEMO_STUDENTS, DEMO_CLASS, TEACHER_CLASSES, EMPTY_CLASS } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/teacher/class/$classId")({
   head: () => ({ meta: [{ title: "Class roster — AI Thinking Lab" }] }),
@@ -12,7 +13,11 @@ export const Route = createFileRoute("/teacher/class/$classId")({
 
 function ClassDetail() {
   const { classId } = Route.useParams();
-  const cls = TEACHER_CLASSES.find((c) => c.id === classId) ?? TEACHER_CLASSES[0];
+  const cls =
+    classId === "empty"
+      ? EMPTY_CLASS
+      : TEACHER_CLASSES.find((c) => c.id === classId) ?? TEACHER_CLASSES[0];
+  const students = cls.students === 0 ? [] : DEMO_STUDENTS;
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 md:px-6">
@@ -26,9 +31,11 @@ function ClassDetail() {
             <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Class</div>
             <h1 className="mt-1 text-3xl font-bold tracking-tight">{cls.name}</h1>
             <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-              <span className="inline-flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {DEMO_STUDENTS.length} students</span>
+              <span className="inline-flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {students.length} students</span>
               <span>·</span>
               <span>Age {DEMO_CLASS.ageGroup}</span>
+              <span>·</span>
+              <span>{cls.attempts} attempts</span>
             </div>
           </div>
           <div className="rounded-2xl border border-border/60 bg-background p-4 shadow-soft">
@@ -48,6 +55,23 @@ function ClassDetail() {
           <h2 className="text-lg font-semibold">Roster</h2>
           <p className="text-xs text-muted-foreground">Click a student to open their progress report.</p>
         </div>
+        {students.length === 0 ? (
+          <div className="p-6">
+            <EmptyState
+              icon={<UserPlus className="h-6 w-6" />}
+              title="No students have joined yet"
+              description={`Share class code "${cls.code}" with your students. They join with a nickname — no email, no account.`}
+              action={
+                <div className="flex items-center gap-2">
+                  <span className="rounded-xl border border-border/60 bg-background px-3 py-2 font-mono text-sm">{cls.code}</span>
+                  <Button variant="outline" size="sm" className="rounded-xl">
+                    <Copy className="mr-1 h-3.5 w-3.5" /> Copy code
+                  </Button>
+                </div>
+              }
+            />
+          </div>
+        ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-muted/40 text-xs uppercase tracking-wider text-muted-foreground">
@@ -62,7 +86,7 @@ function ClassDetail() {
               </tr>
             </thead>
             <tbody className="divide-y divide-border/60">
-              {DEMO_STUDENTS.map((s) => (
+              {students.map((s) => (
                 <tr key={s.id} className="hover:bg-muted/30">
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-3">
@@ -89,7 +113,14 @@ function ClassDetail() {
             </tbody>
           </table>
         </div>
+        )}
       </Card>
+
+      {students.length > 0 && (
+        <p className="mt-4 text-xs text-muted-foreground">
+          Want to see the empty class state? Open <Link to="/teacher/class/$classId" params={{ classId: "empty" }} className="underline hover:text-foreground">Grade 7 Pilot</Link>.
+        </p>
+      )}
     </main>
   );
 }
