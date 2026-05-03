@@ -14,6 +14,7 @@ import { Route as StudentRouteImport } from './routes/student'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StudentIndexRouteImport } from './routes/student.index'
+import { Route as StudentSummaryRouteImport } from './routes/student.summary'
 import { Route as StudentGamesRouteImport } from './routes/student.games'
 import { Route as StudentFeedbackRouteImport } from './routes/student.feedback'
 import { Route as StudentGamesTrustLightRouteImport } from './routes/student.games.trust-light'
@@ -42,6 +43,11 @@ const IndexRoute = IndexRouteImport.update({
 const StudentIndexRoute = StudentIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => StudentRoute,
+} as any)
+const StudentSummaryRoute = StudentSummaryRouteImport.update({
+  id: '/summary',
+  path: '/summary',
   getParentRoute: () => StudentRoute,
 } as any)
 const StudentGamesRoute = StudentGamesRouteImport.update({
@@ -73,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/teacher': typeof TeacherRoute
   '/student/feedback': typeof StudentFeedbackRoute
   '/student/games': typeof StudentGamesRouteWithChildren
+  '/student/summary': typeof StudentSummaryRoute
   '/student/': typeof StudentIndexRoute
   '/student/games/prompt-battle': typeof StudentGamesPromptBattleRoute
   '/student/games/trust-light': typeof StudentGamesTrustLightRoute
@@ -83,6 +90,7 @@ export interface FileRoutesByTo {
   '/teacher': typeof TeacherRoute
   '/student/feedback': typeof StudentFeedbackRoute
   '/student/games': typeof StudentGamesRouteWithChildren
+  '/student/summary': typeof StudentSummaryRoute
   '/student': typeof StudentIndexRoute
   '/student/games/prompt-battle': typeof StudentGamesPromptBattleRoute
   '/student/games/trust-light': typeof StudentGamesTrustLightRoute
@@ -95,6 +103,7 @@ export interface FileRoutesById {
   '/teacher': typeof TeacherRoute
   '/student/feedback': typeof StudentFeedbackRoute
   '/student/games': typeof StudentGamesRouteWithChildren
+  '/student/summary': typeof StudentSummaryRoute
   '/student/': typeof StudentIndexRoute
   '/student/games/prompt-battle': typeof StudentGamesPromptBattleRoute
   '/student/games/trust-light': typeof StudentGamesTrustLightRoute
@@ -108,6 +117,7 @@ export interface FileRouteTypes {
     | '/teacher'
     | '/student/feedback'
     | '/student/games'
+    | '/student/summary'
     | '/student/'
     | '/student/games/prompt-battle'
     | '/student/games/trust-light'
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/teacher'
     | '/student/feedback'
     | '/student/games'
+    | '/student/summary'
     | '/student'
     | '/student/games/prompt-battle'
     | '/student/games/trust-light'
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/teacher'
     | '/student/feedback'
     | '/student/games'
+    | '/student/summary'
     | '/student/'
     | '/student/games/prompt-battle'
     | '/student/games/trust-light'
@@ -176,6 +188,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/student/'
       preLoaderRoute: typeof StudentIndexRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/student/summary': {
+      id: '/student/summary'
+      path: '/summary'
+      fullPath: '/student/summary'
+      preLoaderRoute: typeof StudentSummaryRouteImport
       parentRoute: typeof StudentRoute
     }
     '/student/games': {
@@ -226,12 +245,14 @@ const StudentGamesRouteWithChildren = StudentGamesRoute._addFileChildren(
 interface StudentRouteChildren {
   StudentFeedbackRoute: typeof StudentFeedbackRoute
   StudentGamesRoute: typeof StudentGamesRouteWithChildren
+  StudentSummaryRoute: typeof StudentSummaryRoute
   StudentIndexRoute: typeof StudentIndexRoute
 }
 
 const StudentRouteChildren: StudentRouteChildren = {
   StudentFeedbackRoute: StudentFeedbackRoute,
   StudentGamesRoute: StudentGamesRouteWithChildren,
+  StudentSummaryRoute: StudentSummaryRoute,
   StudentIndexRoute: StudentIndexRoute,
 }
 
