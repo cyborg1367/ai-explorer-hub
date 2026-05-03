@@ -1,9 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, Swords } from "lucide-react";
+import { ArrowLeft, ArrowRight, Swords, Lightbulb } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { Textarea } from "@/components/ui/textarea";
 import { PROMPT_BATTLE_ROUNDS, PROMPT_REASONS } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/student/games/prompt-battle")({
@@ -16,6 +17,7 @@ function PromptBattle() {
   const [index, setIndex] = useState(0);
   const [pick, setPick] = useState<string | null>(null);
   const [reasons, setReasons] = useState<string[]>([]);
+  const [improved, setImproved] = useState("");
   const total = PROMPT_BATTLE_ROUNDS.length;
   const round = PROMPT_BATTLE_ROUNDS[index];
 
@@ -27,15 +29,18 @@ function PromptBattle() {
     if (!pick) return;
     const chosen = round.prompts.find((p) => p.id === pick)!;
     const correct = chosen.better;
+    const partial = !correct && improved.trim().length > 12;
+    const result = correct ? "correct" : partial ? "partial" : "review";
+    const score = correct ? 20 : partial ? 12 : 6;
     navigate({
       to: "/student/feedback",
       search: {
         game: "prompt-battle",
-        correct: correct ? 1 : 0,
-        score: correct ? 20 : 8,
+        result,
+        score,
         next: index + 1 < total ? index + 1 : -1,
         explanation: round.why,
-      } as any,
+      },
     });
   }
 
@@ -56,6 +61,10 @@ function PromptBattle() {
           </div>
           <h1 className="mt-2 text-xl font-bold md:text-2xl">Goal: {round.goal}</h1>
           <p className="mt-1 text-sm text-muted-foreground">Which prompt would get the better answer?</p>
+          <p className="mt-3 inline-flex items-start gap-2 rounded-2xl bg-background/70 p-3 text-xs text-muted-foreground">
+            <Lightbulb className="mt-0.5 h-3.5 w-3.5 text-primary" />
+            A clear prompt usually says <strong className="text-foreground">who, what, how long,</strong> and <strong className="text-foreground">in what tone</strong>.
+          </p>
         </div>
 
         <div className="border-t border-border/60 p-6 md:p-8">
@@ -97,6 +106,16 @@ function PromptBattle() {
                 );
               })}
             </div>
+          </div>
+
+          <div className="mt-8">
+            <h2 className="text-sm font-semibold">Can you write an even better prompt? <span className="font-normal text-muted-foreground">(optional)</span></h2>
+            <Textarea
+              value={improved}
+              onChange={(e) => setImproved(e.target.value)}
+              placeholder="Write your own version of the prompt…"
+              className="mt-3 min-h-[90px] rounded-2xl"
+            />
           </div>
 
           <div className="mt-8 flex items-center justify-between">
