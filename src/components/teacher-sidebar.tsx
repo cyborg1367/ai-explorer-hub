@@ -2,10 +2,10 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { LayoutDashboard, Users, Plus, BookOpen, GraduationCap, Sparkles, LogOut } from "lucide-react";
 
 const NAV = [
-  { to: "/teacher", label: "Dashboard", icon: LayoutDashboard, exact: true },
-  { to: "/teacher/class/demo", label: "Demo Class", icon: Users, exact: false, match: "/teacher/class" },
-  { to: "/teacher/create", label: "New Class", icon: Plus, exact: false },
-] as const;
+  { to: "/teacher" as const, label: "Dashboard", icon: LayoutDashboard, exact: true, match: "/teacher" },
+  { to: "/teacher/class/$classId" as const, params: { classId: "demo" }, label: "Demo Class", icon: Users, exact: false, match: "/teacher/class" },
+  { to: "/teacher/create" as const, label: "New Class", icon: Plus, exact: false, match: "/teacher/create" },
+];
 
 const SECONDARY = [
   { to: "/student", label: "View as student", icon: GraduationCap },
@@ -33,19 +33,20 @@ export function TeacherSidebar() {
       <nav className="mt-2 flex flex-col gap-1">
         {NAV.map((n) => {
           const Icon = n.icon;
-          const active = n.exact
-            ? path === n.to
-            : path.startsWith(("match" in n && n.match) || n.to);
+          const active = n.exact ? path === n.match : path.startsWith(n.match);
+          const className = `flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-colors ${
+            active ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground"
+          }`;
+          if ("params" in n && n.params) {
+            return (
+              <Link key={n.to} to={n.to} params={n.params} className={className}>
+                <Icon className="h-4 w-4" />
+                {n.label}
+              </Link>
+            );
+          }
           return (
-            <Link
-              key={n.to}
-              to={n.to}
-              className={`flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-colors ${
-                active
-                  ? "bg-primary/10 text-primary"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
-              }`}
-            >
+            <Link key={n.to} to={n.to} className={className}>
               <Icon className="h-4 w-4" />
               {n.label}
             </Link>
