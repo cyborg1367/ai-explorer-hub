@@ -13,6 +13,7 @@ import { Route as TeacherRouteImport } from './routes/teacher'
 import { Route as StudentRouteImport } from './routes/student'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TeacherIndexRouteImport } from './routes/teacher.index'
 import { Route as StudentIndexRouteImport } from './routes/student.index'
 import { Route as StudentSummaryRouteImport } from './routes/student.summary'
 import { Route as StudentJournalRouteImport } from './routes/student.journal'
@@ -40,6 +41,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const TeacherIndexRoute = TeacherIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => TeacherRoute,
 } as any)
 const StudentIndexRoute = StudentIndexRouteImport.update({
   id: '/',
@@ -82,24 +88,25 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/student': typeof StudentRouteWithChildren
-  '/teacher': typeof TeacherRoute
+  '/teacher': typeof TeacherRouteWithChildren
   '/student/feedback': typeof StudentFeedbackRoute
   '/student/games': typeof StudentGamesRouteWithChildren
   '/student/journal': typeof StudentJournalRoute
   '/student/summary': typeof StudentSummaryRoute
   '/student/': typeof StudentIndexRoute
+  '/teacher/': typeof TeacherIndexRoute
   '/student/games/prompt-battle': typeof StudentGamesPromptBattleRoute
   '/student/games/trust-light': typeof StudentGamesTrustLightRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/teacher': typeof TeacherRoute
   '/student/feedback': typeof StudentFeedbackRoute
   '/student/games': typeof StudentGamesRouteWithChildren
   '/student/journal': typeof StudentJournalRoute
   '/student/summary': typeof StudentSummaryRoute
   '/student': typeof StudentIndexRoute
+  '/teacher': typeof TeacherIndexRoute
   '/student/games/prompt-battle': typeof StudentGamesPromptBattleRoute
   '/student/games/trust-light': typeof StudentGamesTrustLightRoute
 }
@@ -108,12 +115,13 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/student': typeof StudentRouteWithChildren
-  '/teacher': typeof TeacherRoute
+  '/teacher': typeof TeacherRouteWithChildren
   '/student/feedback': typeof StudentFeedbackRoute
   '/student/games': typeof StudentGamesRouteWithChildren
   '/student/journal': typeof StudentJournalRoute
   '/student/summary': typeof StudentSummaryRoute
   '/student/': typeof StudentIndexRoute
+  '/teacher/': typeof TeacherIndexRoute
   '/student/games/prompt-battle': typeof StudentGamesPromptBattleRoute
   '/student/games/trust-light': typeof StudentGamesTrustLightRoute
 }
@@ -129,18 +137,19 @@ export interface FileRouteTypes {
     | '/student/journal'
     | '/student/summary'
     | '/student/'
+    | '/teacher/'
     | '/student/games/prompt-battle'
     | '/student/games/trust-light'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/login'
-    | '/teacher'
     | '/student/feedback'
     | '/student/games'
     | '/student/journal'
     | '/student/summary'
     | '/student'
+    | '/teacher'
     | '/student/games/prompt-battle'
     | '/student/games/trust-light'
   id:
@@ -154,6 +163,7 @@ export interface FileRouteTypes {
     | '/student/journal'
     | '/student/summary'
     | '/student/'
+    | '/teacher/'
     | '/student/games/prompt-battle'
     | '/student/games/trust-light'
   fileRoutesById: FileRoutesById
@@ -162,7 +172,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
   StudentRoute: typeof StudentRouteWithChildren
-  TeacherRoute: typeof TeacherRoute
+  TeacherRoute: typeof TeacherRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -194,6 +204,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/teacher/': {
+      id: '/teacher/'
+      path: '/'
+      fullPath: '/teacher/'
+      preLoaderRoute: typeof TeacherIndexRouteImport
+      parentRoute: typeof TeacherRoute
     }
     '/student/': {
       id: '/student/'
@@ -280,11 +297,22 @@ const StudentRouteChildren: StudentRouteChildren = {
 const StudentRouteWithChildren =
   StudentRoute._addFileChildren(StudentRouteChildren)
 
+interface TeacherRouteChildren {
+  TeacherIndexRoute: typeof TeacherIndexRoute
+}
+
+const TeacherRouteChildren: TeacherRouteChildren = {
+  TeacherIndexRoute: TeacherIndexRoute,
+}
+
+const TeacherRouteWithChildren =
+  TeacherRoute._addFileChildren(TeacherRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
   StudentRoute: StudentRouteWithChildren,
-  TeacherRoute: TeacherRoute,
+  TeacherRoute: TeacherRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
