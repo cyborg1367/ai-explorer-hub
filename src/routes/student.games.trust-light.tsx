@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ArrowRight, ShieldCheck, Lightbulb } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -34,15 +34,21 @@ function TrustLight() {
   function submit() {
     if (!light) return;
     const correct = light === scenario.correctTrust;
+    // Partial: chose yellow when truth is green/red, or vice-versa for adjacent.
+    const partial =
+      !correct &&
+      ((light === "yellow") || (scenario.correctTrust === "yellow"));
+    const result = correct ? "correct" : partial ? "partial" : "review";
+    const score = correct ? 25 : partial ? 15 : 8;
     navigate({
       to: "/student/feedback",
       search: {
         game: "trust-light",
-        correct: correct ? 1 : 0,
-        score: correct ? 25 : 10,
+        result,
+        score,
         next: index + 1 < total ? index + 1 : -1,
         explanation: scenario.explanation,
-      } as any,
+      },
     });
   }
 
@@ -65,6 +71,10 @@ function TrustLight() {
             <ShieldCheck className="h-4 w-4" /> Trust Light
           </div>
           <h1 className="mt-2 text-2xl font-bold md:text-3xl">{scenario.question}</h1>
+          <p className="mt-2 inline-flex items-start gap-2 rounded-2xl bg-background/70 p-3 text-xs text-muted-foreground">
+            <Lightbulb className="mt-0.5 h-3.5 w-3.5 text-primary" />
+            Tip: Read the AI answer carefully. Look for facts you can check, dates, or things that "sound off".
+          </p>
         </div>
 
         <div className="border-t border-border/60 p-6 md:p-8">

@@ -18,6 +18,7 @@ export const Route = createFileRoute("/student/summary")({
 function Summary() {
   const s = useSearch({ from: "/student/summary" });
   const title = s.game === "trust-light" ? "Trust Light" : "Prompt Battle";
+  const accuracy = s.game === "trust-light" ? "80%" : "75%";
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-12 md:px-6">
@@ -29,7 +30,7 @@ function Summary() {
         </div>
         <div className="grid gap-4 p-8 sm:grid-cols-3">
           <Stat icon={<Sparkles className="h-5 w-5 text-primary" />} label="Total points" value={`+${s.score}`} />
-          <Stat icon={<Target className="h-5 w-5 text-success" />} label="Accuracy" value="80%" />
+          <Stat icon={<Target className="h-5 w-5 text-success" />} label="Accuracy" value={accuracy} />
           <Stat icon={<BookOpen className="h-5 w-5 text-accent-foreground" />} label="Skills grown" value="3" />
         </div>
         <div className="border-t border-border/60 p-8">

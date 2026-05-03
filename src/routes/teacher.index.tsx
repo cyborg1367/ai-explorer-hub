@@ -3,7 +3,7 @@ import { Plus, Users, Activity, BarChart3, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { TEACHER_CLASSES, SKILL_SCORES, SKILL_CATEGORIES } from "@/lib/mock-data";
+import { TEACHER_CLASSES, SKILL_SCORES, SKILL_CATEGORIES, EMPTY_CLASS } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/teacher/")({
   head: () => ({ meta: [{ title: "Teacher dashboard — AI Thinking Lab" }] }),
@@ -11,8 +11,9 @@ export const Route = createFileRoute("/teacher/")({
 });
 
 function TeacherDashboard() {
-  const totalStudents = TEACHER_CLASSES.reduce((s, c) => s + c.students, 0);
-  const totalAttempts = TEACHER_CLASSES.reduce((s, c) => s + c.attempts, 0);
+  const allClasses = [...TEACHER_CLASSES, EMPTY_CLASS];
+  const totalStudents = allClasses.reduce((s, c) => s + c.students, 0);
+  const totalAttempts = allClasses.reduce((s, c) => s + c.attempts, 0);
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 md:px-6">
@@ -27,7 +28,7 @@ function TeacherDashboard() {
       </header>
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <KpiCard icon={<Users className="h-5 w-5" />} label="Classes" value={String(TEACHER_CLASSES.length)} hint="active" />
+        <KpiCard icon={<Users className="h-5 w-5" />} label="Classes" value={String(allClasses.length)} hint="active" />
         <KpiCard icon={<Users className="h-5 w-5" />} label="Students" value={String(totalStudents)} hint="across classes" />
         <KpiCard icon={<Activity className="h-5 w-5" />} label="Attempts" value={String(totalAttempts)} hint="this week" />
         <KpiCard icon={<BarChart3 className="h-5 w-5" />} label="Avg accuracy" value="78%" hint="↑ 6% vs last week" />
@@ -39,7 +40,7 @@ function TeacherDashboard() {
             <h2 className="text-lg font-semibold">Your classes</h2>
           </div>
           <ul className="divide-y divide-border/60">
-            {TEACHER_CLASSES.map((c) => (
+            {allClasses.map((c) => (
               <li key={c.id}>
                 <Link
                   to="/teacher/class/$classId"
@@ -47,7 +48,14 @@ function TeacherDashboard() {
                   className="flex items-center justify-between gap-4 py-4 transition-colors hover:bg-muted/40"
                 >
                   <div>
-                    <div className="font-medium">{c.name}</div>
+                    <div className="flex items-center gap-2 font-medium">
+                      {c.name}
+                      {c.students === 0 && (
+                        <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                          New
+                        </span>
+                      )}
+                    </div>
                     <div className="mt-0.5 text-xs text-muted-foreground">
                       Code <span className="font-mono">{c.code}</span> · {c.students} students · last activity {c.latest}
                     </div>
