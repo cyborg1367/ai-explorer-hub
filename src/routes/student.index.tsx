@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Flame, Trophy, Target, Sparkles } from "lucide-react";
+import { ArrowRight, Flame, Trophy, Target, Sparkles, Award } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { StatusBadge } from "@/components/status-badge";
-import { DEMO_CLASS, GAMES, RECENT_ATTEMPTS } from "@/lib/mock-data";
+import { DEMO_CLASS, GAMES, RECENT_ATTEMPTS, EARNED_SKILLS } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/student/")({
   head: () => ({ meta: [{ title: "Student dashboard — AI Thinking Lab" }] }),
@@ -96,6 +96,35 @@ function StudentDashboard() {
                   </span>
                   <span className="font-mono text-xs text-muted-foreground">+{a.score}</span>
                 </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </section>
+
+      <section className="mt-8">
+        <Card className="rounded-3xl border-border/60 p-6 shadow-soft">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="flex items-center gap-2 text-lg font-semibold">
+              <Award className="h-5 w-5 text-primary" /> Skill cards earned
+            </h2>
+            <span className="text-xs text-muted-foreground">{EARNED_SKILLS.length} of 9</span>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {EARNED_SKILLS.map((s) => (
+              <div key={s.id} className="rounded-2xl border border-border/60 bg-gradient-card p-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-2xl" aria-hidden>{s.emoji}</span>
+                  <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
+                    s.level === "Gold" ? "bg-warning/20 text-warning-foreground" :
+                    s.level === "Silver" ? "bg-muted text-foreground" :
+                    "bg-accent/40 text-accent-foreground"
+                  }`}>
+                    {s.level}
+                  </span>
+                </div>
+                <div className="mt-2 text-sm font-semibold">{s.name}</div>
+                <div className="text-xs text-muted-foreground">Earned {s.earnedOn}</div>
               </div>
             ))}
           </div>
