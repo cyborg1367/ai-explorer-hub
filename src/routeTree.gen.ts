@@ -14,6 +14,7 @@ import { Route as StudentRouteImport } from './routes/student'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StudentIndexRouteImport } from './routes/student.index'
+import { Route as StudentGamesRouteImport } from './routes/student.games'
 
 const TeacherRoute = TeacherRouteImport.update({
   id: '/teacher',
@@ -40,18 +41,25 @@ const StudentIndexRoute = StudentIndexRouteImport.update({
   path: '/',
   getParentRoute: () => StudentRoute,
 } as any)
+const StudentGamesRoute = StudentGamesRouteImport.update({
+  id: '/games',
+  path: '/games',
+  getParentRoute: () => StudentRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/student': typeof StudentRouteWithChildren
   '/teacher': typeof TeacherRoute
+  '/student/games': typeof StudentGamesRoute
   '/student/': typeof StudentIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/teacher': typeof TeacherRoute
+  '/student/games': typeof StudentGamesRoute
   '/student': typeof StudentIndexRoute
 }
 export interface FileRoutesById {
@@ -60,14 +68,28 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/student': typeof StudentRouteWithChildren
   '/teacher': typeof TeacherRoute
+  '/student/games': typeof StudentGamesRoute
   '/student/': typeof StudentIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/student' | '/teacher' | '/student/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/student'
+    | '/teacher'
+    | '/student/games'
+    | '/student/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/teacher' | '/student'
-  id: '__root__' | '/' | '/login' | '/student' | '/teacher' | '/student/'
+  to: '/' | '/login' | '/teacher' | '/student/games' | '/student'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/student'
+    | '/teacher'
+    | '/student/games'
+    | '/student/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -114,14 +136,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentIndexRouteImport
       parentRoute: typeof StudentRoute
     }
+    '/student/games': {
+      id: '/student/games'
+      path: '/games'
+      fullPath: '/student/games'
+      preLoaderRoute: typeof StudentGamesRouteImport
+      parentRoute: typeof StudentRoute
+    }
   }
 }
 
 interface StudentRouteChildren {
+  StudentGamesRoute: typeof StudentGamesRoute
   StudentIndexRoute: typeof StudentIndexRoute
 }
 
 const StudentRouteChildren: StudentRouteChildren = {
+  StudentGamesRoute: StudentGamesRoute,
   StudentIndexRoute: StudentIndexRoute,
 }
 
