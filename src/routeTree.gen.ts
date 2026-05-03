@@ -15,6 +15,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StudentIndexRouteImport } from './routes/student.index'
 import { Route as StudentSummaryRouteImport } from './routes/student.summary'
+import { Route as StudentJournalRouteImport } from './routes/student.journal'
 import { Route as StudentGamesRouteImport } from './routes/student.games'
 import { Route as StudentFeedbackRouteImport } from './routes/student.feedback'
 import { Route as StudentGamesTrustLightRouteImport } from './routes/student.games.trust-light'
@@ -50,6 +51,11 @@ const StudentSummaryRoute = StudentSummaryRouteImport.update({
   path: '/summary',
   getParentRoute: () => StudentRoute,
 } as any)
+const StudentJournalRoute = StudentJournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
+  getParentRoute: () => StudentRoute,
+} as any)
 const StudentGamesRoute = StudentGamesRouteImport.update({
   id: '/games',
   path: '/games',
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/teacher': typeof TeacherRoute
   '/student/feedback': typeof StudentFeedbackRoute
   '/student/games': typeof StudentGamesRouteWithChildren
+  '/student/journal': typeof StudentJournalRoute
   '/student/summary': typeof StudentSummaryRoute
   '/student/': typeof StudentIndexRoute
   '/student/games/prompt-battle': typeof StudentGamesPromptBattleRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/teacher': typeof TeacherRoute
   '/student/feedback': typeof StudentFeedbackRoute
   '/student/games': typeof StudentGamesRouteWithChildren
+  '/student/journal': typeof StudentJournalRoute
   '/student/summary': typeof StudentSummaryRoute
   '/student': typeof StudentIndexRoute
   '/student/games/prompt-battle': typeof StudentGamesPromptBattleRoute
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/teacher': typeof TeacherRoute
   '/student/feedback': typeof StudentFeedbackRoute
   '/student/games': typeof StudentGamesRouteWithChildren
+  '/student/journal': typeof StudentJournalRoute
   '/student/summary': typeof StudentSummaryRoute
   '/student/': typeof StudentIndexRoute
   '/student/games/prompt-battle': typeof StudentGamesPromptBattleRoute
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/teacher'
     | '/student/feedback'
     | '/student/games'
+    | '/student/journal'
     | '/student/summary'
     | '/student/'
     | '/student/games/prompt-battle'
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/teacher'
     | '/student/feedback'
     | '/student/games'
+    | '/student/journal'
     | '/student/summary'
     | '/student'
     | '/student/games/prompt-battle'
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
     | '/teacher'
     | '/student/feedback'
     | '/student/games'
+    | '/student/journal'
     | '/student/summary'
     | '/student/'
     | '/student/games/prompt-battle'
@@ -197,6 +209,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentSummaryRouteImport
       parentRoute: typeof StudentRoute
     }
+    '/student/journal': {
+      id: '/student/journal'
+      path: '/journal'
+      fullPath: '/student/journal'
+      preLoaderRoute: typeof StudentJournalRouteImport
+      parentRoute: typeof StudentRoute
+    }
     '/student/games': {
       id: '/student/games'
       path: '/games'
@@ -245,6 +264,7 @@ const StudentGamesRouteWithChildren = StudentGamesRoute._addFileChildren(
 interface StudentRouteChildren {
   StudentFeedbackRoute: typeof StudentFeedbackRoute
   StudentGamesRoute: typeof StudentGamesRouteWithChildren
+  StudentJournalRoute: typeof StudentJournalRoute
   StudentSummaryRoute: typeof StudentSummaryRoute
   StudentIndexRoute: typeof StudentIndexRoute
 }
@@ -252,6 +272,7 @@ interface StudentRouteChildren {
 const StudentRouteChildren: StudentRouteChildren = {
   StudentFeedbackRoute: StudentFeedbackRoute,
   StudentGamesRoute: StudentGamesRouteWithChildren,
+  StudentJournalRoute: StudentJournalRoute,
   StudentSummaryRoute: StudentSummaryRoute,
   StudentIndexRoute: StudentIndexRoute,
 }
