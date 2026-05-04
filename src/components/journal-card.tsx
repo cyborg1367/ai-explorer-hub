@@ -13,7 +13,7 @@ export function JournalCard({ entry, compact }: JournalCardProps) {
       {!compact && (
         <div className="mt-2 text-xs font-medium text-muted-foreground">{entry.prompt}</div>
       )}
-      <p className={`mt-${compact ? 2 : 1} text-sm leading-relaxed`}>{entry.text}</p>
+      <p className={`${compact ? "mt-2" : "mt-1"} text-sm leading-relaxed`}>{entry.text}</p>
     </article>
   );
 }
