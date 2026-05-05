@@ -184,6 +184,21 @@ export const mockApi = {
     }
     return ok({ id: "new", ...input });
   },
+
+  // POST /api/v1/student/journal
+  submitJournalEntry: async (input: { prompt: string; text: string; game?: string }) => {
+    await delay(null, 400);
+    if (input.text.trim().length < 8) {
+      return fail({ code: "validation_error", message: "Write a few more words so your reflection is meaningful.", field: "text" });
+    }
+    return ok({
+      id: "j-new",
+      game: input.game ?? "Reflection",
+      date: "Just now",
+      prompt: input.prompt,
+      text: input.text.trim(),
+    });
+  },
 };
 
 export type MockApi = typeof mockApi;

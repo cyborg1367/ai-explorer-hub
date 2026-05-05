@@ -3,7 +3,10 @@ import { Plus, Users, Activity, BarChart3, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { TEACHER_CLASSES, SKILL_SCORES, SKILL_CATEGORIES, EMPTY_CLASS } from "@/lib/mock-data";
+import { LoadingState } from "@/components/loading-state";
+import { ErrorState } from "@/components/error-state";
+import { useMockQuery } from "@/hooks/use-mock-query";
+import { mockApi } from "@/api/client";
 
 export const Route = createFileRoute("/teacher/")({
   head: () => ({ meta: [{ title: "Teacher dashboard — AI Thinking Lab" }] }),
@@ -11,15 +14,29 @@ export const Route = createFileRoute("/teacher/")({
 });
 
 function TeacherDashboard() {
-  const allClasses = [...TEACHER_CLASSES, EMPTY_CLASS];
-  const totalStudents = allClasses.reduce((s, c) => s + c.students, 0);
-  const totalAttempts = allClasses.reduce((s, c) => s + c.attempts, 0);
+  const { data, loading, error, refetch } = useMockQuery(() => mockApi.getTeacherDashboard(), []);
+
+  if (loading) {
+    return (
+      <main className="mx-auto max-w-7xl px-4 py-10 md:px-6">
+        <LoadingState rows={4} />
+      </main>
+    );
+  }
+  if (error || !data) {
+    return (
+      <main className="mx-auto max-w-3xl px-4 py-12">
+        <ErrorState error={error} onRetry={refetch} title="Couldn't load your dashboard" />
+      </main>
+    );
+  }
+  const allClasses = data.classes;
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 md:px-6">
       <header className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Welcome back, Ms. Parker</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Welcome back, {data.teacherName}</h1>
           <p className="mt-1 text-sm text-muted-foreground">Here's how your classes are thinking this week.</p>
         </div>
         <Button asChild className="rounded-xl shadow-soft">
@@ -29,9 +46,9 @@ function TeacherDashboard() {
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <KpiCard icon={<Users className="h-5 w-5" />} label="Classes" value={String(allClasses.length)} hint="active" />
-        <KpiCard icon={<Users className="h-5 w-5" />} label="Students" value={String(totalStudents)} hint="across classes" />
-        <KpiCard icon={<Activity className="h-5 w-5" />} label="Attempts" value={String(totalAttempts)} hint="this week" />
-        <KpiCard icon={<BarChart3 className="h-5 w-5" />} label="Avg accuracy" value="78%" hint="↑ 6% vs last week" />
+        <KpiCard icon={<Users className="h-5 w-5" />} label="Students" value={String(data.totalStudents)} hint="across classes" />
+        <KpiCard icon={<Activity className="h-5 w-5" />} label="Attempts" value={String(data.totalAttempts)} hint="this week" />
+        <KpiCard icon={<BarChart3 className="h-5 w-5" />} label="Avg accuracy" value={`${Math.round(data.averageAccuracy * 100)}%`} hint="↑ 6% vs last week" />
       </section>
 
       <section className="mt-10 grid gap-6 lg:grid-cols-3">
@@ -77,13 +94,13 @@ function TeacherDashboard() {
           <h2 className="text-lg font-semibold">Skill summary</h2>
           <p className="mt-1 text-xs text-muted-foreground">Average skill scores across all students.</p>
           <ul className="mt-5 space-y-3">
-            {SKILL_CATEGORIES.map((s) => (
-              <li key={s}>
+            {data.skillScores.map(({ skill, score }) => (
+              <li key={skill}>
                 <div className="mb-1 flex items-center justify-between text-xs">
-                  <span className="font-medium">{s}</span>
-                  <span className="text-muted-foreground">{SKILL_SCORES[s]}</span>
+                  <span className="font-medium">{skill}</span>
+                  <span className="text-muted-foreground">{score}</span>
                 </div>
-                <Progress value={SKILL_SCORES[s]} className="h-1.5" />
+                <Progress value={score} className="h-1.5" />
               </li>
             ))}
           </ul>

@@ -1,10 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { ArrowLeft, ArrowRight, Copy, Users, UserPlus } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/status-badge";
 import { EmptyState } from "@/components/empty-state";
-import { DEMO_STUDENTS, DEMO_CLASS, TEACHER_CLASSES, EMPTY_CLASS } from "@/lib/mock-data";
+import { LoadingState } from "@/components/loading-state";
+import { ErrorState } from "@/components/error-state";
+import { useMockQuery } from "@/hooks/use-mock-query";
+import { mockApi } from "@/api/client";
+import type { GameStatus } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/teacher/class/$classId")({
   head: () => ({ meta: [{ title: "Class roster — AI Thinking Lab" }] }),
@@ -13,11 +18,21 @@ export const Route = createFileRoute("/teacher/class/$classId")({
 
 function ClassDetail() {
   const { classId } = Route.useParams();
-  const cls =
-    classId === "empty"
-      ? EMPTY_CLASS
-      : TEACHER_CLASSES.find((c) => c.id === classId) ?? TEACHER_CLASSES[0];
-  const students = cls.students === 0 ? [] : DEMO_STUDENTS;
+  const { data, loading, error, refetch } = useMockQuery(() => mockApi.getClassDetail(classId), [classId]);
+  const [filter, setFilter] = useState<"All" | GameStatus>("All");
+
+  if (loading) {
+    return <main className="mx-auto max-w-7xl px-4 py-10 md:px-6"><LoadingState rows={4} /></main>;
+  }
+  if (error || !data) {
+    return <main className="mx-auto max-w-3xl px-4 py-12"><ErrorState error={error} onRetry={refetch} /></main>;
+  }
+  const cls = data.classRoom;
+  const allStudents = data.roster;
+  const students = filter === "All"
+    ? allStudents
+    : allStudents.filter((s) => s.trustLight === filter || s.promptBattle === filter);
+  const filters: Array<"All" | GameStatus> = ["All", "Not Started", "In Progress", "Completed"];
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 md:px-6">
@@ -31,9 +46,9 @@ function ClassDetail() {
             <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Class</div>
             <h1 className="mt-1 text-3xl font-bold tracking-tight">{cls.name}</h1>
             <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-              <span className="inline-flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {students.length} students</span>
+              <span className="inline-flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {allStudents.length} students</span>
               <span>·</span>
-              <span>Age {DEMO_CLASS.ageGroup}</span>
+              <span>Age {data.ageGroup}</span>
               <span>·</span>
               <span>{cls.attempts} attempts</span>
             </div>
@@ -51,11 +66,30 @@ function ClassDetail() {
       </header>
 
       <Card className="mt-8 overflow-hidden rounded-3xl border-border/60 shadow-soft">
-        <div className="border-b border-border/60 p-5">
-          <h2 className="text-lg font-semibold">Roster</h2>
-          <p className="text-xs text-muted-foreground">Click a student to open their progress report.</p>
+        <div className="flex flex-col gap-3 border-b border-border/60 p-5 md:flex-row md:items-end md:justify-between">
+          <div>
+            <h2 className="text-lg font-semibold">Roster</h2>
+            <p className="text-xs text-muted-foreground">Click a student to open their progress report.</p>
+          </div>
+          {allStudents.length > 0 && (
+            <div className="flex flex-wrap gap-1.5" role="tablist" aria-label="Filter students by status">
+              {filters.map((f) => (
+                <button
+                  key={f}
+                  role="tab"
+                  aria-selected={filter === f}
+                  onClick={() => setFilter(f)}
+                  className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
+                    filter === f ? "border-primary bg-primary/10 text-primary" : "border-border bg-background text-muted-foreground hover:bg-muted"
+                  }`}
+                >
+                  {f}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
-        {students.length === 0 ? (
+        {allStudents.length === 0 ? (
           <div className="p-6">
             <EmptyState
               icon={<UserPlus className="h-6 w-6" />}
@@ -69,6 +103,15 @@ function ClassDetail() {
                   </Button>
                 </div>
               }
+            />
+          </div>
+        ) : students.length === 0 ? (
+          <div className="p-6">
+            <EmptyState
+              icon={<Users className="h-6 w-6" />}
+              title="No students match this filter"
+              description="Try a different status filter."
+              action={<Button variant="outline" size="sm" className="rounded-xl" onClick={() => setFilter("All")}>Show all</Button>}
             />
           </div>
         ) : (

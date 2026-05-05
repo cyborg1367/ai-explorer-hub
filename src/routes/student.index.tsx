@@ -4,7 +4,11 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { StatusBadge } from "@/components/status-badge";
-import { DEMO_CLASS, GAMES, RECENT_ATTEMPTS, EARNED_SKILLS } from "@/lib/mock-data";
+import { LoadingState } from "@/components/loading-state";
+import { ErrorState } from "@/components/error-state";
+import { EmptyState } from "@/components/empty-state";
+import { useMockQuery } from "@/hooks/use-mock-query";
+import { mockApi } from "@/api/client";
 
 export const Route = createFileRoute("/student/")({
   head: () => ({ meta: [{ title: "Student dashboard — AI Thinking Lab" }] }),
@@ -12,24 +16,42 @@ export const Route = createFileRoute("/student/")({
 });
 
 function StudentDashboard() {
-  const active = GAMES.filter((g) => !g.locked);
+  const { data, loading, error, refetch } = useMockQuery(() => mockApi.getStudentDashboard(), []);
+
+  if (loading) {
+    return (
+      <main className="mx-auto max-w-7xl px-4 py-8 md:px-6">
+        <div className="h-44 animate-pulse rounded-3xl bg-gradient-card" />
+        <div className="mt-8"><LoadingState rows={2} /></div>
+      </main>
+    );
+  }
+  if (error || !data) {
+    return (
+      <main className="mx-auto max-w-3xl px-4 py-12">
+        <ErrorState error={error} onRetry={refetch} title="Couldn't load your dashboard" />
+      </main>
+    );
+  }
+  const active = data.activeGames;
+  const accuracyPct = Math.round(data.accuracy * 100);
   return (
     <main className="mx-auto max-w-7xl px-4 py-8 md:px-6">
       <section className="overflow-hidden rounded-3xl bg-gradient-hero p-8 text-primary-foreground shadow-card md:p-10">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-medium backdrop-blur">
-              <Sparkles className="h-3.5 w-3.5" /> {DEMO_CLASS.name}
+              <Sparkles className="h-3.5 w-3.5" /> {data.className}
             </div>
-            <h1 className="mt-4 text-3xl font-bold md:text-4xl">Hi Aria 👋 ready to think?</h1>
+            <h1 className="mt-4 text-3xl font-bold md:text-4xl">Hi {data.nickname} 👋 ready to think?</h1>
             <p className="mt-2 max-w-xl text-sm opacity-90">
-              You have 2 active games today. Keep your streak going and earn skill points.
+              You have {active.length} active games today. Keep your streak going and earn skill points.
             </p>
           </div>
           <div className="grid grid-cols-3 gap-3 text-center">
-            <Stat icon={<Flame className="h-4 w-4" />} label="Streak" value="4 days" />
-            <Stat icon={<Trophy className="h-4 w-4" />} label="Score" value="320" />
-            <Stat icon={<Target className="h-4 w-4" />} label="Accuracy" value="86%" />
+            <Stat icon={<Flame className="h-4 w-4" />} label="Streak" value={`${data.streakDays} days`} />
+            <Stat icon={<Trophy className="h-4 w-4" />} label="Score" value={String(data.totalScore)} />
+            <Stat icon={<Target className="h-4 w-4" />} label="Accuracy" value={`${accuracyPct}%`} />
           </div>
         </div>
       </section>
@@ -69,10 +91,10 @@ function StudentDashboard() {
         <Card className="rounded-3xl border-border/60 p-6 shadow-soft">
           <h2 className="mb-4 text-lg font-semibold">Class info</h2>
           <dl className="space-y-3 text-sm">
-            <Row label="Class" value={DEMO_CLASS.name} />
-            <Row label="Code" value={<span className="font-mono">{DEMO_CLASS.code}</span>} />
-            <Row label="Age" value={DEMO_CLASS.ageGroup} />
-            <Row label="Teacher" value={DEMO_CLASS.teacher} />
+            <Row label="Class" value={data.className} />
+            <Row label="Code" value={<span className="font-mono">{data.classCode}</span>} />
+            <Row label="Age" value={data.ageGroup} />
+            <Row label="Teacher" value={data.teacher} />
           </dl>
           <Button asChild variant="secondary" className="mt-5 w-full rounded-xl">
             <Link to="/student/journal">Open thinking journal</Link>
@@ -83,8 +105,15 @@ function StudentDashboard() {
       <section className="mt-8">
         <Card className="rounded-3xl border-border/60 p-6 shadow-soft">
           <h2 className="mb-4 text-lg font-semibold">Recent attempts</h2>
+          {data.recentAttempts.length === 0 ? (
+            <EmptyState
+              icon={<Sparkles className="h-5 w-5" />}
+              title="No attempts yet"
+              description="Start a mission and your recent answers will show up here."
+            />
+          ) : (
           <div className="divide-y divide-border/60">
-            {RECENT_ATTEMPTS.map((a) => (
+            {data.recentAttempts.map((a) => (
               <div key={a.id} className="flex items-center justify-between py-3 text-sm">
                 <div>
                   <div className="font-medium">{a.item}</div>
@@ -99,6 +128,7 @@ function StudentDashboard() {
               </div>
             ))}
           </div>
+          )}
         </Card>
       </section>
 
@@ -108,10 +138,10 @@ function StudentDashboard() {
             <h2 className="flex items-center gap-2 text-lg font-semibold">
               <Award className="h-5 w-5 text-primary" /> Skill cards earned
             </h2>
-            <span className="text-xs text-muted-foreground">{EARNED_SKILLS.length} of 9</span>
+            <span className="text-xs text-muted-foreground">{data.earnedCards.length} of 9</span>
           </div>
           <div className="grid gap-3 sm:grid-cols-3">
-            {EARNED_SKILLS.map((s) => (
+            {data.earnedCards.map((s) => (
               <div key={s.id} className="rounded-2xl border border-border/60 bg-gradient-card p-4">
                 <div className="flex items-center justify-between">
                   <span className="text-2xl" aria-hidden>{s.emoji}</span>
