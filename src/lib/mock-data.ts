@@ -61,30 +61,30 @@ export const DEMO_STUDENTS: Student[] = [
 export const GAMES: Game[] = [
   {
     id: "trust-light",
-    title: "Trust Light",
-    tagline: "Decide if an AI answer is trustworthy.",
-    emoji: "🚦",
+    title: "AI Detective: Trust Lab",
+    tagline: "Investigate AI answers and decide what to trust.",
+    emoji: "🕵️",
     skills: ["Critical Thinking", "Fact Checking", "Reasoning"],
     status: "In Progress",
     locked: false,
     progress: 2,
-    totalItems: 5,
+    totalItems: 3,
   },
   {
     id: "prompt-battle",
-    title: "Prompt Battle",
-    tagline: "Pick the clearer, smarter prompt.",
-    emoji: "⚔️",
+    title: "Prompt Arena",
+    tagline: "Compare prompts and find the strongest instructions.",
+    emoji: "🎯",
     skills: ["Question Quality", "Revision"],
     status: "Not Started",
     locked: false,
     progress: 0,
-    totalItems: 4,
+    totalItems: 3,
   },
   {
     id: "mistake-hunter",
     title: "AI Mistake Hunter",
-    tagline: "Find errors in AI responses.",
+    tagline: "Hunt for hidden errors inside AI answers.",
     emoji: "🔍",
     skills: ["Fact Checking", "Critical Thinking"],
     status: "Not Started",
@@ -95,7 +95,7 @@ export const GAMES: Game[] = [
   {
     id: "question-master",
     title: "Question Master",
-    tagline: "Craft questions that get great answers.",
+    tagline: "Craft questions that unlock great answers.",
     emoji: "❓",
     skills: ["Question Quality", "Creativity"],
     status: "Not Started",
@@ -106,7 +106,7 @@ export const GAMES: Game[] = [
   {
     id: "idea-factory",
     title: "Idea Factory",
-    tagline: "Use AI to brainstorm — then choose wisely.",
+    tagline: "Brainstorm with AI — then pick the best idea.",
     emoji: "💡",
     skills: ["Creativity", "Reflection"],
     status: "Not Started",
@@ -117,7 +117,7 @@ export const GAMES: Game[] = [
   {
     id: "improve-it",
     title: "Improve It",
-    tagline: "Revise and upgrade an AI draft.",
+    tagline: "Revise an AI draft and make it sharper.",
     emoji: "✨",
     skills: ["Revision", "Creativity"],
     status: "Not Started",
@@ -126,6 +126,57 @@ export const GAMES: Game[] = [
     totalItems: 5,
   },
 ];
+
+// ---------- Mission framework metadata (game-like wrapper around items) ----
+
+export interface MissionMeta {
+  gameId: "trust-light" | "prompt-battle";
+  missionTitle: string;
+  role: string;            // e.g. "AI Detective"
+  roleEmoji: string;
+  unitLabel: string;       // "Case" or "Round"
+  unitLabelPlural: string; // "Cases" or "Rounds"
+  meterLabel: string;      // "Detective Meter" / "Prompt Power"
+  badgeName: string;       // earned badge name
+  badgeEmoji: string;
+  intro: string;
+  brief: string;
+  skills: SkillCategory[];
+  nextMission: { title: string; tagline: string; emoji: string };
+}
+
+export const MISSIONS: Record<"trust-light" | "prompt-battle", MissionMeta> = {
+  "trust-light": {
+    gameId: "trust-light",
+    missionTitle: "AI Detective: Trust Lab",
+    role: "AI Detective",
+    roleEmoji: "🕵️",
+    unitLabel: "Case",
+    unitLabelPlural: "Cases",
+    meterLabel: "Detective Meter",
+    badgeName: "Trust Investigator",
+    badgeEmoji: "🛡️",
+    intro: "The lab needs your help. Three AI answers came in — your job is to test them.",
+    brief: "Read each case file, choose a trust signal, and collect evidence to back up your call.",
+    skills: ["Critical Thinking", "Fact Checking", "Reasoning"],
+    nextMission: { title: "AI Mistake Hunter", tagline: "Spot errors hidden inside AI answers.", emoji: "🔍" },
+  },
+  "prompt-battle": {
+    gameId: "prompt-battle",
+    missionTitle: "Prompt Arena",
+    role: "Prompt Explorer",
+    roleEmoji: "🎯",
+    unitLabel: "Round",
+    unitLabelPlural: "Rounds",
+    meterLabel: "Prompt Power",
+    badgeName: "Prompt Explorer",
+    badgeEmoji: "🏅",
+    intro: "Step into the arena. Two prompts will compete — pick the one that gives AI better instructions.",
+    brief: "Compare each pair on clarity, audience, detail, and goal. Then upgrade the weaker one.",
+    skills: ["Question Quality", "Reasoning", "Revision"],
+    nextMission: { title: "Question Master", tagline: "Craft questions that unlock great answers.", emoji: "❓" },
+  },
+};
 
 export interface TrustLightScenario {
   id: string;
