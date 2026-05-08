@@ -21,7 +21,7 @@ export const Route = createFileRoute("/student/summary")({
 
 function Summary() {
   const s = useSearch({ from: "/student/summary" });
-  const meta = MISSIONS[s.game];
+  const meta = MISSIONS[s.game as "trust-light" | "prompt-battle"];
   const reportTitle = s.game === "trust-light" ? "Mission Report" : "Arena Summary";
   const accuracy = s.total > 0 ? Math.round((s.solved / s.total) * 100) : 0;
   const evidenceLabel = s.game === "trust-light" ? "Evidence collected" : "Prompts upgraded";
@@ -58,7 +58,7 @@ function Summary() {
         <div className="border-t border-border/60 p-6 md:p-8">
           <h2 className="text-sm font-semibold">Skills you practiced</h2>
           <div className="mt-3 flex flex-wrap gap-2">
-            {meta.skills.map((sk) => (
+            {meta.skills.map((sk: string) => (
               <span key={sk} className="rounded-full bg-secondary px-3 py-1 text-xs font-medium">{sk}</span>
             ))}
           </div>
