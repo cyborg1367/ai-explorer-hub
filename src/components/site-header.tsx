@@ -11,14 +11,14 @@ export function SiteHeader({ variant = "marketing", rightSlot }: SiteHeaderProps
   const path = useRouterState({ select: (s) => s.location.pathname });
 
   const studentNav = [
-    { to: "/student", label: "Dashboard" },
-    { to: "/student/games", label: "Games" },
-    { to: "/student/journal", label: "Journal" },
+    { to: "/student", label: "داشبورد" },
+    { to: "/student/games", label: "بازی‌ها" },
+    { to: "/student/journal", label: "دفترچه فکر" },
   ];
   const teacherNav = [
-    { to: "/teacher", label: "Dashboard" },
-    { to: "/teacher/class/demo", label: "Demo Class" },
-    { to: "/teacher/create", label: "New Class" },
+    { to: "/teacher", label: "داشبورد" },
+    { to: "/teacher/class/demo", label: "کلاس نمونه" },
+    { to: "/teacher/create", label: "کلاس جدید" },
   ];
 
   const nav = variant === "student" ? studentNav : variant === "teacher" ? teacherNav : [];
@@ -31,8 +31,8 @@ export function SiteHeader({ variant = "marketing", rightSlot }: SiteHeaderProps
             <Sparkles className="h-5 w-5" />
           </span>
           <div className="leading-tight">
-            <div className="font-semibold tracking-tight">AI Thinking Lab</div>
-            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">for Kids</div>
+            <div className="font-semibold tracking-tight">آزمایشگاه AI</div>
+            <div className="text-[10px] tracking-wider text-muted-foreground">ویژه کودکان</div>
           </div>
         </Link>
 
@@ -63,10 +63,10 @@ export function SiteHeader({ variant = "marketing", rightSlot }: SiteHeaderProps
           {variant === "marketing" && (
             <>
               <Button asChild variant="ghost" size="sm" className="rounded-full">
-                <Link to="/login">Sign in</Link>
+                <Link to="/login">ورود</Link>
               </Button>
               <Button asChild size="sm" className="rounded-full shadow-soft">
-                <Link to="/login">Get started</Link>
+                <Link to="/login">شروع کن</Link>
               </Button>
             </>
           )}
