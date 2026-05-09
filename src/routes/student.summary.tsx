@@ -3,7 +3,7 @@ import { Trophy, Sparkles, BookOpen, Target, Award, ArrowRight } from "lucide-re
 import { z } from "zod";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MISSIONS } from "@/lib/mock-data";
+import { MISSIONS, SKILL_LABELS_FA } from "@/lib/mock-data";
 
 const search = z.object({
   game: z.enum(["trust-light", "prompt-battle"]).default("trust-light"),
