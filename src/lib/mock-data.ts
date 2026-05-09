@@ -45,24 +45,24 @@ export interface Student {
 }
 
 export const DEMO_CLASS = {
-  name: "AI Thinking Lab Demo Class",
+  name: "کلاس نمونه آزمایشگاه AI",
   code: "AI-1020",
   ageGroup: "10–12",
-  teacher: "Ms. Parker",
+  teacher: "خانم پارکر",
 };
 
 export const DEMO_STUDENTS: Student[] = [
-  { id: "aria", nickname: "Aria", attempts: 14, latestActivity: "5 min ago", trustLight: "Completed", promptBattle: "In Progress", totalScore: 320 },
-  { id: "nika", nickname: "Nika", attempts: 9, latestActivity: "Today", trustLight: "In Progress", promptBattle: "Not Started", totalScore: 180 },
-  { id: "sami", nickname: "Sami", attempts: 12, latestActivity: "Yesterday", trustLight: "Completed", promptBattle: "Completed", totalScore: 410 },
-  { id: "dorsa", nickname: "Dorsa", attempts: 6, latestActivity: "2 days ago", trustLight: "In Progress", promptBattle: "Not Started", totalScore: 140 },
+  { id: "aria", nickname: "آریا", attempts: 14, latestActivity: "۵ دقیقه پیش", trustLight: "Completed", promptBattle: "In Progress", totalScore: 320 },
+  { id: "nika", nickname: "نیکا", attempts: 9, latestActivity: "امروز", trustLight: "In Progress", promptBattle: "Not Started", totalScore: 180 },
+  { id: "sami", nickname: "سامی", attempts: 12, latestActivity: "دیروز", trustLight: "Completed", promptBattle: "Completed", totalScore: 410 },
+  { id: "dorsa", nickname: "درسا", attempts: 6, latestActivity: "۲ روز پیش", trustLight: "In Progress", promptBattle: "Not Started", totalScore: 140 },
 ];
 
 export const GAMES: Game[] = [
   {
     id: "trust-light",
-    title: "AI Detective: Trust Lab",
-    tagline: "Investigate AI answers and decide what to trust.",
+    title: "آزمایشگاه اعتماد",
+    tagline: "پاسخ‌های AI را بررسی کن و تصمیم بگیر به چه چیزی اعتماد کنی.",
     emoji: "🕵️",
     skills: ["Critical Thinking", "Fact Checking", "Reasoning"],
     status: "In Progress",
@@ -72,8 +72,8 @@ export const GAMES: Game[] = [
   },
   {
     id: "prompt-battle",
-    title: "Prompt Arena",
-    tagline: "Compare prompts and find the strongest instructions.",
+    title: "میدان پرامپت",
+    tagline: "پرامپت‌ها را مقایسه کن و قوی‌ترین دستور را پیدا کن.",
     emoji: "🎯",
     skills: ["Question Quality", "Revision"],
     status: "Not Started",
@@ -83,8 +83,8 @@ export const GAMES: Game[] = [
   },
   {
     id: "mistake-hunter",
-    title: "AI Mistake Hunter",
-    tagline: "Hunt for hidden errors inside AI answers.",
+    title: "شکارچی خطای AI",
+    tagline: "خطاهای پنهان در پاسخ‌های هوش مصنوعی را پیدا کن.",
     emoji: "🔍",
     skills: ["Fact Checking", "Critical Thinking"],
     status: "Not Started",
@@ -94,8 +94,8 @@ export const GAMES: Game[] = [
   },
   {
     id: "question-master",
-    title: "Question Master",
-    tagline: "Craft questions that unlock great answers.",
+    title: "استاد سؤال‌ها",
+    tagline: "سؤال‌هایی بساز که بهترین پاسخ‌ها را باز کنند.",
     emoji: "❓",
     skills: ["Question Quality", "Creativity"],
     status: "Not Started",
@@ -105,8 +105,8 @@ export const GAMES: Game[] = [
   },
   {
     id: "idea-factory",
-    title: "Idea Factory",
-    tagline: "Brainstorm with AI — then pick the best idea.",
+    title: "کارخانه ایده",
+    tagline: "با AI ایده‌پردازی کن — بعد بهترینش را انتخاب کن.",
     emoji: "💡",
     skills: ["Creativity", "Reflection"],
     status: "Not Started",
@@ -116,8 +116,8 @@ export const GAMES: Game[] = [
   },
   {
     id: "improve-it",
-    title: "Improve It",
-    tagline: "Revise an AI draft and make it sharper.",
+    title: "بهترش کن",
+    tagline: "پیش‌نویس AI را بازنویسی کن و دقیق‌ترش کن.",
     emoji: "✨",
     skills: ["Revision", "Creativity"],
     status: "Not Started",
@@ -148,33 +148,33 @@ export interface MissionMeta {
 export const MISSIONS: Record<"trust-light" | "prompt-battle", MissionMeta> = {
   "trust-light": {
     gameId: "trust-light",
-    missionTitle: "AI Detective: Trust Lab",
-    role: "AI Detective",
+    missionTitle: "آزمایشگاه اعتماد",
+    role: "کارآگاه AI",
     roleEmoji: "🕵️",
-    unitLabel: "Case",
-    unitLabelPlural: "Cases",
-    meterLabel: "Detective Meter",
-    badgeName: "Trust Investigator",
+    unitLabel: "پرونده",
+    unitLabelPlural: "پرونده‌ها",
+    meterLabel: "نشانگر کارآگاهی",
+    badgeName: "بازرس اعتماد",
     badgeEmoji: "🛡️",
-    intro: "The lab needs your help. Three AI answers came in — your job is to test them.",
-    brief: "Read each case file, choose a trust signal, and collect evidence to back up your call.",
+    intro: "آزمایشگاه به کمکت نیاز دارد. سه پاسخ AI رسیده — وظیفه تو بررسی آن‌هاست.",
+    brief: "هر پرونده را بخوان، چراغ اعتماد را انتخاب کن و نشانه‌ها را برای دلیلت جمع کن.",
     skills: ["Critical Thinking", "Fact Checking", "Reasoning"],
-    nextMission: { title: "AI Mistake Hunter", tagline: "Spot errors hidden inside AI answers.", emoji: "🔍" },
+    nextMission: { title: "شکارچی خطای AI", tagline: "خطاهای پنهان در پاسخ‌های AI را پیدا کن.", emoji: "🔍" },
   },
   "prompt-battle": {
     gameId: "prompt-battle",
-    missionTitle: "Prompt Arena",
-    role: "Prompt Explorer",
+    missionTitle: "میدان پرامپت",
+    role: "کاوشگر پرامپت",
     roleEmoji: "🎯",
-    unitLabel: "Round",
-    unitLabelPlural: "Rounds",
-    meterLabel: "Prompt Power",
-    badgeName: "Prompt Explorer",
+    unitLabel: "مرحله",
+    unitLabelPlural: "مرحله‌ها",
+    meterLabel: "قدرت پرامپت",
+    badgeName: "کاوشگر پرامپت",
     badgeEmoji: "🏅",
-    intro: "Step into the arena. Two prompts will compete — pick the one that gives AI better instructions.",
-    brief: "Compare each pair on clarity, audience, detail, and goal. Then upgrade the weaker one.",
+    intro: "وارد میدان شو. دو پرامپت با هم رقابت می‌کنند — آن را انتخاب کن که دستور بهتری به AI می‌دهد.",
+    brief: "هر جفت را از نظر وضوح، مخاطب، جزئیات و هدف بسنج. بعد پرامپت ضعیف‌تر را بهتر کن.",
     skills: ["Question Quality", "Reasoning", "Revision"],
-    nextMission: { title: "Question Master", tagline: "Craft questions that unlock great answers.", emoji: "❓" },
+    nextMission: { title: "استاد سؤال‌ها", tagline: "سؤال‌هایی بساز که پاسخ‌های عالی را باز کنند.", emoji: "❓" },
   },
 };
 
@@ -189,48 +189,48 @@ export interface TrustLightScenario {
 export const TRUST_LIGHT_SCENARIOS: TrustLightScenario[] = [
   {
     id: "tl1",
-    question: "How many planets are in our solar system?",
-    aiAnswer: "There are 8 planets in our solar system: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, and Neptune.",
+    question: "منظومه شمسی ما چند سیاره دارد؟",
+    aiAnswer: "منظومه شمسی ۸ سیاره دارد: عطارد، زهره، زمین، مریخ، مشتری، زحل، اورانوس و نپتون.",
     correctTrust: "green",
-    explanation: "This matches what scientists agree on today. Pluto is now classified as a dwarf planet.",
+    explanation: "این پاسخ با چیزی که دانشمندان امروز قبول دارند هماهنگ است. پلوتو حالا یک سیاره کوتوله شمرده می‌شود.",
   },
   {
     id: "tl2",
-    question: "Who invented the telephone?",
-    aiAnswer: "The telephone was invented in 1672 by Thomas Edison in Germany.",
+    question: "مخترع تلفن کیست؟",
+    aiAnswer: "تلفن در سال ۱۶۷۲ توسط توماس ادیسون در آلمان اختراع شد.",
     correctTrust: "red",
-    explanation: "This has multiple errors. The telephone was patented by Alexander Graham Bell in 1876.",
+    explanation: "این پاسخ چند خطا دارد. تلفن در سال ۱۸۷۶ توسط الکساندر گراهام بل ثبت شد.",
   },
   {
     id: "tl3",
-    question: "Is it safe to eat snow?",
-    aiAnswer: "Fresh snow is usually safe in small amounts, but city snow may contain pollution. Check with an adult first.",
+    question: "آیا خوردن برف بی‌خطر است؟",
+    aiAnswer: "برف تازه معمولاً به مقدار کم بی‌خطر است، اما برف شهر ممکن است آلودگی داشته باشد. اول از یک بزرگ‌تر بپرس.",
     correctTrust: "yellow",
-    explanation: "The answer is mostly right but depends on where you are — worth double-checking with a trusted adult.",
+    explanation: "پاسخ بیشتر درست است اما به جای زندگی بستگی دارد — بهتر است با یک بزرگ‌تر مطمئن بررسی کنی.",
   },
   {
     id: "tl4",
-    question: "What is the largest ocean?",
-    aiAnswer: "The Pacific Ocean is the largest ocean on Earth.",
+    question: "بزرگ‌ترین اقیانوس کدام است؟",
+    aiAnswer: "اقیانوس آرام بزرگ‌ترین اقیانوس روی زمین است.",
     correctTrust: "green",
-    explanation: "Correct — the Pacific covers about one-third of Earth's surface.",
+    explanation: "درست است — اقیانوس آرام حدود یک‌سوم سطح زمین را می‌پوشاند.",
   },
   {
     id: "tl5",
-    question: "Can humans breathe underwater without equipment?",
-    aiAnswer: "Yes, with practice humans can learn to breathe underwater like fish.",
+    question: "آیا انسان می‌تواند بدون وسیله زیر آب نفس بکشد؟",
+    aiAnswer: "بله، با تمرین انسان می‌تواند مثل ماهی زیر آب نفس بکشد.",
     correctTrust: "red",
-    explanation: "False. Humans cannot extract oxygen from water — we need equipment like scuba gear.",
+    explanation: "نادرست. انسان نمی‌تواند اکسیژن را از آب بگیرد — به وسایلی مثل دستگاه غواصی نیاز داریم.",
   },
 ];
 
 export const TRUST_REASONS = [
-  "The facts seem correct",
-  "I would double-check this",
-  "Some details look wrong",
-  "It contradicts what I know",
-  "It depends on the situation",
-  "Sounds confident but unclear",
+  "اطلاعات درست به نظر می‌رسد",
+  "من این را دوباره بررسی می‌کنم",
+  "بعضی جزئیات اشتباه است",
+  "با چیزی که می‌دانم تناقض دارد",
+  "به موقعیت بستگی دارد",
+  "با اطمینان گفته اما گنگ است",
 ];
 
 export interface PromptBattleRound {
@@ -243,48 +243,48 @@ export interface PromptBattleRound {
 export const PROMPT_BATTLE_ROUNDS: PromptBattleRound[] = [
   {
     id: "pb1",
-    goal: "Get help writing a short poem about autumn for a 4th grade class.",
+    goal: "کمک برای نوشتن یک شعر کوتاه درباره پاییز برای کلاس چهارم.",
     prompts: [
-      { id: "a", text: "Write a poem.", better: false },
-      { id: "b", text: "Write a 4-line rhyming poem about autumn leaves for 4th graders, friendly tone.", better: true },
+      { id: "a", text: "یک شعر بنویس.", better: false },
+      { id: "b", text: "یک شعر چهار خطی قافیه‌دار درباره برگ‌های پاییز برای دانش‌آموزان کلاس چهارم با لحن دوستانه بنویس.", better: true },
     ],
-    why: "The better prompt names the topic, length, audience, and tone — so the answer will fit what you actually need.",
+    why: "پرامپت بهتر موضوع، طول، مخاطب و لحن را مشخص می‌کند — پس پاسخ دقیقاً به چیزی که می‌خواهی نزدیک‌تر می‌شود.",
   },
   {
     id: "pb2",
-    goal: "Find healthy snack ideas for after school.",
+    goal: "پیدا کردن ایده‌های میان‌وعده سالم برای بعد از مدرسه.",
     prompts: [
-      { id: "a", text: "List 5 healthy after-school snacks for a 10-year-old that take under 5 minutes.", better: true },
-      { id: "b", text: "Snacks?", better: false },
+      { id: "a", text: "۵ میان‌وعده سالم برای یک بچه ۱۰ ساله را نام ببر که کمتر از ۵ دقیقه آماده شوند.", better: true },
+      { id: "b", text: "میان‌وعده؟", better: false },
     ],
-    why: "Specific quantity, audience, and time limit make the answer much more useful.",
+    why: "تعداد مشخص، مخاطب و محدودیت زمانی پاسخ را خیلی مفیدتر می‌کند.",
   },
   {
     id: "pb3",
-    goal: "Understand why the sky is blue.",
+    goal: "فهمیدن اینکه چرا آسمان آبی است.",
     prompts: [
-      { id: "a", text: "Tell me about science.", better: false },
-      { id: "b", text: "Explain in 3 simple sentences why the sky looks blue, for a kid who likes science.", better: true },
+      { id: "a", text: "درباره علم برایم بگو.", better: false },
+      { id: "b", text: "در ۳ جمله ساده توضیح بده چرا آسمان آبی به نظر می‌رسد، برای بچه‌ای که علم را دوست دارد.", better: true },
     ],
-    why: "A clear topic, length, and audience help the AI focus its answer.",
+    why: "موضوع، طول و مخاطب مشخص باعث می‌شود AI پاسخ را متمرکز بدهد.",
   },
   {
     id: "pb4",
-    goal: "Plan a fun weekend activity with family.",
+    goal: "برنامه‌ریزی یک فعالیت آخر هفته شاد با خانواده.",
     prompts: [
-      { id: "a", text: "Suggest 3 free indoor activities for a family of 4 on a rainy Saturday.", better: true },
-      { id: "b", text: "Ideas for the weekend.", better: false },
+      { id: "a", text: "۳ فعالیت رایگان داخل خانه برای یک خانواده ۴ نفره در شنبه‌ای بارانی پیشنهاد بده.", better: true },
+      { id: "b", text: "ایده‌هایی برای آخر هفته.", better: false },
     ],
-    why: "Constraints (free, indoor, family of 4, rainy) shape much better suggestions.",
+    why: "محدودیت‌ها (رایگان، داخل خانه، ۴ نفره، بارانی) پیشنهادها را خیلی بهتر شکل می‌دهد.",
   },
 ];
 
 export const PROMPT_REASONS = [
-  "It is more specific",
-  "It says who the answer is for",
-  "It sets a length or format",
-  "It gives helpful context",
-  "It is easier to understand",
+  "دقیق‌تر است",
+  "مخاطب پاسخ را مشخص کرده",
+  "طول یا قالب پاسخ را گفته",
+  "زمینه مفیدی می‌دهد",
+  "فهمیدنش راحت‌تر است",
 ];
 
 export interface JournalEntry {
@@ -296,9 +296,9 @@ export interface JournalEntry {
 }
 
 export const JOURNAL_ENTRIES: JournalEntry[] = [
-  { id: "j1", game: "Trust Light", date: "Today", prompt: "What helped you decide?", text: "I noticed the AI sounded sure but I remembered Edison didn't invent the telephone." },
-  { id: "j2", game: "Prompt Battle", date: "Yesterday", prompt: "Why was the prompt better?", text: "Because it told the AI who would read it and how long the poem should be." },
-  { id: "j3", game: "Trust Light", date: "2 days ago", prompt: "When would you ask an adult?", text: "If something is about safety, like eating things, I would check with my mom." },
+  { id: "j1", game: "آزمایشگاه اعتماد", date: "امروز", prompt: "چه چیزی کمکت کرد تصمیم بگیری؟", text: "متوجه شدم AI خیلی مطمئن حرف می‌زد، ولی یادم بود که ادیسون مخترع تلفن نیست." },
+  { id: "j2", game: "میدان پرامپت", date: "دیروز", prompt: "چرا این پرامپت بهتر بود؟", text: "چون به AI گفته بود چه کسی پاسخ را می‌خواند و شعر باید چند خط باشد." },
+  { id: "j3", game: "آزمایشگاه اعتماد", date: "۲ روز پیش", prompt: "کِی از یک بزرگ‌تر می‌پرسی؟", text: "اگر چیزی درباره ایمنی باشد، مثل خوردن چیزها، حتماً از مامانم می‌پرسم." },
 ];
 
 export const SKILL_SCORES: Record<SkillCategory, number> = {
@@ -314,21 +314,21 @@ export const SKILL_SCORES: Record<SkillCategory, number> = {
 };
 
 export const RECENT_ATTEMPTS = [
-  { id: "a1", game: "Trust Light", item: "Snow safety", result: "Correct", score: 20, time: "5 min ago" },
-  { id: "a2", game: "Trust Light", item: "Telephone inventor", result: "Correct", score: 25, time: "8 min ago" },
-  { id: "a3", game: "Prompt Battle", item: "Autumn poem", result: "Correct", score: 15, time: "Yesterday" },
-  { id: "a4", game: "Trust Light", item: "Solar system", result: "Try again", score: 5, time: "Yesterday" },
+  { id: "a1", game: "آزمایشگاه اعتماد", item: "ایمنی برف", result: "Correct", score: 20, time: "۵ دقیقه پیش" },
+  { id: "a2", game: "آزمایشگاه اعتماد", item: "مخترع تلفن", result: "Correct", score: 25, time: "۸ دقیقه پیش" },
+  { id: "a3", game: "میدان پرامپت", item: "شعر پاییز", result: "Correct", score: 15, time: "دیروز" },
+  { id: "a4", game: "آزمایشگاه اعتماد", item: "منظومه شمسی", result: "Try again", score: 5, time: "دیروز" },
 ];
 
 export const TEACHER_CLASSES = [
-  { id: "demo", name: "AI Thinking Lab Demo Class", code: "AI-1020", students: 4, attempts: 41, latest: "5 min ago" },
-  { id: "5b", name: "Grade 5B Critical Thinkers", code: "AI-2244", students: 22, attempts: 318, latest: "1 hour ago" },
-  { id: "6a", name: "Grade 6A Explorers", code: "AI-3091", students: 19, attempts: 256, latest: "Yesterday" },
+  { id: "demo", name: "کلاس نمونه آزمایشگاه AI", code: "AI-1020", students: 4, attempts: 41, latest: "۵ دقیقه پیش" },
+  { id: "5b", name: "پنجم ب — متفکران نقاد", code: "AI-2244", students: 22, attempts: 318, latest: "۱ ساعت پیش" },
+  { id: "6a", name: "ششم الف — کاوشگران", code: "AI-3091", students: 19, attempts: 256, latest: "دیروز" },
 ];
 
 export const EMPTY_CLASS = {
   id: "empty",
-  name: "Grade 7 Pilot",
+  name: "هفتم — کلاس آزمایشی",
   code: "AI-7700",
   students: 0,
   attempts: 0,
@@ -344,9 +344,41 @@ export interface EarnedSkill {
 }
 
 export const EARNED_SKILLS: EarnedSkill[] = [
-  { id: "es1", name: "Critical Thinking", level: "Silver", emoji: "🧠", earnedOn: "Today" },
-  { id: "es2", name: "Fact Checking", level: "Bronze", emoji: "🔎", earnedOn: "Yesterday" },
-  { id: "es3", name: "Question Quality", level: "Bronze", emoji: "❓", earnedOn: "2 days ago" },
+  { id: "es1", name: "Critical Thinking", level: "Silver", emoji: "🧠", earnedOn: "امروز" },
+  { id: "es2", name: "Fact Checking", level: "Bronze", emoji: "🔎", earnedOn: "دیروز" },
+  { id: "es3", name: "Question Quality", level: "Bronze", emoji: "❓", earnedOn: "۲ روز پیش" },
 ];
 
 export const EXISTING_CLASS_CODES = ["AI-1020", "AI-2244", "AI-3091"];
+
+// ---------- Persian display labels for typed enums --------------------------
+
+export const STATUS_LABELS_FA: Record<GameStatus, string> = {
+  "Not Started": "شروع نشده",
+  "In Progress": "در حال انجام",
+  "Completed": "کامل شده",
+};
+
+export const SKILL_LABELS_FA: Record<SkillCategory, string> = {
+  "Question Quality": "کیفیت سؤال",
+  "Reasoning": "استدلال",
+  "Critical Thinking": "تفکر نقادانه",
+  "Fact Checking": "بررسی واقعیت",
+  "Creativity": "خلاقیت",
+  "Revision": "بازنویسی",
+  "Privacy Awareness": "حریم خصوصی",
+  "Fairness": "انصاف",
+  "Reflection": "تأمل",
+};
+
+export const SKILL_LEVEL_LABELS_FA: Record<"Bronze" | "Silver" | "Gold", string> = {
+  Bronze: "برنزی",
+  Silver: "نقره‌ای",
+  Gold: "طلایی",
+};
+
+export const ATTEMPT_RESULT_LABELS_FA: Record<string, string> = {
+  Correct: "درست",
+  "Try again": "دوباره تلاش کن",
+  Partial: "نسبی",
+};
