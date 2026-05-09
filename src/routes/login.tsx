@@ -9,8 +9,8 @@ import { Card } from "@/components/ui/card";
 export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
-      { title: "Sign in — AI Thinking Lab for Kids" },
-      { name: "description", content: "Students join with a class code; teachers sign in to manage classes." },
+      { title: "ورود — آزمایشگاه فکر و هوش مصنوعی" },
+      { name: "description", content: "دانش‌آموزان با کد کلاس وارد می‌شوند؛ مربیان برای مدیریت کلاس‌ها وارد می‌شوند." },
     ],
   }),
   component: LoginPage,
@@ -38,15 +38,15 @@ function LoginPage() {
               <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20 backdrop-blur">
                 <Sparkles className="h-5 w-5" />
               </span>
-              <span className="font-semibold">AI Thinking Lab</span>
+              <span className="font-semibold">آزمایشگاه AI</span>
             </Link>
             <div>
-              <h2 className="text-3xl font-bold leading-tight">Welcome back, thinker.</h2>
+              <h2 className="text-3xl font-bold leading-tight">خوش برگشتی، متفکر.</h2>
               <p className="mt-3 text-sm opacity-90">
-                Play structured games. Build real AI literacy. No chatbots, no surprises — just thinking missions designed for the classroom.
+                بازی‌های ساختاریافته انجام بده و سواد واقعی هوش مصنوعی بساز. نه چت‌بات، نه غافلگیری — فقط مأموریت‌های فکری برای کلاس درس.
               </p>
             </div>
-            <div className="text-xs opacity-80">A safe sandbox for ages 10–12.</div>
+            <div className="text-xs opacity-80">بستری امن برای ۱۰ تا ۱۲ سال.</div>
           </div>
 
           <div className="p-8 md:p-10">
@@ -58,7 +58,7 @@ function LoginPage() {
                   role === "student" ? "bg-background text-foreground shadow-soft" : "text-muted-foreground"
                 }`}
               >
-                <BookOpen className="h-4 w-4" /> I'm a student
+                <BookOpen className="h-4 w-4" /> دانش‌آموز هستم
               </button>
               <button
                 type="button"
@@ -67,50 +67,50 @@ function LoginPage() {
                   role === "teacher" ? "bg-background text-foreground shadow-soft" : "text-muted-foreground"
                 }`}
               >
-                <GraduationCap className="h-4 w-4" /> I'm a teacher
+                <GraduationCap className="h-4 w-4" /> مربی هستم
               </button>
             </div>
 
             <h1 className="text-2xl font-bold tracking-tight">
-              {role === "student" ? "Join your class" : "Teacher sign in"}
+              {role === "student" ? "ورود به کلاس" : "ورود مربی"}
             </h1>
             <p className="mt-1 text-sm text-muted-foreground">
               {role === "student"
-                ? "Use the class code your teacher shared."
-                : "Sign in to manage classes and view student progress."}
+                ? "از کد کلاسی که معلمت به تو داده استفاده کن."
+                : "برای مدیریت کلاس‌ها و مشاهده پیشرفت دانش‌آموزان وارد شوید."}
             </p>
 
             <form onSubmit={submit} className="mt-6 space-y-4">
               {role === "student" ? (
                 <>
                   <div className="space-y-2">
-                    <Label htmlFor="code">Class code</Label>
-                    <Input id="code" value={code} onChange={(e) => setCode(e.target.value)} className="rounded-xl text-lg tracking-widest" />
+                    <Label htmlFor="code">کد کلاس</Label>
+                    <Input id="code" value={code} onChange={(e) => setCode(e.target.value)} className="rounded-xl text-lg tracking-widest font-mono" dir="ltr" />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="nick">Nickname</Label>
-                    <Input id="nick" placeholder="e.g. Aria" value={nickname} onChange={(e) => setNickname(e.target.value)} className="rounded-xl" />
+                    <Label htmlFor="nick">نام مستعار</Label>
+                    <Input id="nick" placeholder="مثلاً آریا" value={nickname} onChange={(e) => setNickname(e.target.value)} className="rounded-xl" />
                   </div>
                 </>
               ) : (
                 <>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="teacher@school.org" defaultValue="ms.parker@school.org" className="rounded-xl" />
+                    <Label htmlFor="email">ایمیل</Label>
+                    <Input id="email" type="email" placeholder="teacher@school.org" defaultValue="ms.parker@school.org" className="rounded-xl" dir="ltr" />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="pw">Password</Label>
-                    <Input id="pw" type="password" defaultValue="demo-password" className="rounded-xl" />
+                    <Label htmlFor="pw">رمز عبور</Label>
+                    <Input id="pw" type="password" defaultValue="demo-password" className="rounded-xl" dir="ltr" />
                   </div>
                 </>
               )}
               <Button type="submit" size="lg" className="w-full rounded-xl shadow-soft">
-                {role === "student" ? "Enter the lab" : "Sign in"}
+                {role === "student" ? "ورود به آزمایشگاه" : "ورود"}
               </Button>
             </form>
 
             <p className="mt-6 text-center text-xs text-muted-foreground">
-              This is a prototype. No data is stored.
+              این یک نمونه نمایشی است. هیچ اطلاعاتی ذخیره نمی‌شود.
             </p>
           </div>
         </Card>

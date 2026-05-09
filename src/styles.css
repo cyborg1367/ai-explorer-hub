@@ -159,12 +159,19 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: 'Nunito', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-family: 'Vazirmatn', 'Tahoma', 'Arial', ui-sans-serif, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
+    line-height: 1.7;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Fraunces', 'Nunito', serif;
-    letter-spacing: -0.01em;
+    font-family: 'Vazirmatn', 'Tahoma', 'Arial', sans-serif;
+    letter-spacing: 0;
+    line-height: 1.45;
+  }
+  /* RTL: keep numbers/code blocks LTR for legibility */
+  .font-mono, code, kbd, samp, pre, [data-ltr] {
+    direction: ltr;
+    unicode-bidi: isolate;
   }
 }
 

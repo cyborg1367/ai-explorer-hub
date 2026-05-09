@@ -9,6 +9,7 @@ import { ErrorState } from "@/components/error-state";
 import { EmptyState } from "@/components/empty-state";
 import { useMockQuery } from "@/hooks/use-mock-query";
 import { mockApi } from "@/api/client";
+import { SKILL_LABELS_FA, SKILL_LEVEL_LABELS_FA } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/student/")({
   head: () => ({ meta: [{ title: "Student dashboard — AI Thinking Lab" }] }),
@@ -29,7 +30,7 @@ function StudentDashboard() {
   if (error || !data) {
     return (
       <main className="mx-auto max-w-3xl px-4 py-12">
-        <ErrorState error={error} onRetry={refetch} title="Couldn't load your dashboard" />
+        <ErrorState error={error} onRetry={refetch} title="نتوانستیم داشبورد را بارگذاری کنیم" />
       </main>
     );
   }
@@ -43,15 +44,15 @@ function StudentDashboard() {
             <div className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-medium backdrop-blur">
               <Sparkles className="h-3.5 w-3.5" /> {data.className}
             </div>
-            <h1 className="mt-4 text-3xl font-bold md:text-4xl">Hi {data.nickname} 👋 ready to think?</h1>
+            <h1 className="mt-4 text-3xl font-bold md:text-4xl">سلام {data.nickname} 👋 آماده‌ای فکر کنی؟</h1>
             <p className="mt-2 max-w-xl text-sm opacity-90">
-              You have {active.length} active games today. Keep your streak going and earn skill points.
+              امروز {active.length} بازی فعال داری. روند خودت را ادامه بده و امتیاز مهارت بگیر.
             </p>
           </div>
           <div className="grid grid-cols-3 gap-3 text-center">
-            <Stat icon={<Flame className="h-4 w-4" />} label="Streak" value={`${data.streakDays} days`} />
-            <Stat icon={<Trophy className="h-4 w-4" />} label="Score" value={String(data.totalScore)} />
-            <Stat icon={<Target className="h-4 w-4" />} label="Accuracy" value={`${accuracyPct}%`} />
+            <Stat icon={<Flame className="h-4 w-4" />} label="روز پیاپی" value={`${data.streakDays} روز`} />
+            <Stat icon={<Trophy className="h-4 w-4" />} label="امتیاز" value={String(data.totalScore)} />
+            <Stat icon={<Target className="h-4 w-4" />} label="دقت" value={`${accuracyPct}٪`} />
           </div>
         </div>
       </section>
@@ -59,9 +60,9 @@ function StudentDashboard() {
       <section className="mt-10 grid gap-6 md:grid-cols-3">
         <Card className="md:col-span-2 rounded-3xl border-border/60 p-6 shadow-soft">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-semibold">Active games</h2>
+            <h2 className="text-lg font-semibold">مأموریت‌های فعال</h2>
             <Button asChild variant="ghost" size="sm" className="rounded-full">
-              <Link to="/student/games">See all <ArrowRight className="ml-1 h-4 w-4" /></Link>
+              <Link to="/student/games">مشاهده همه <ArrowRight className="mr-1 h-4 w-4 rotate-180" /></Link>
             </Button>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -80,7 +81,7 @@ function StudentDashboard() {
                 <div className="mt-4">
                   <Progress value={(g.progress / g.totalItems) * 100} className="h-1.5" />
                   <div className="mt-1 text-xs text-muted-foreground">
-                    {g.progress} / {g.totalItems} missions
+                    {g.progress} از {g.totalItems} مأموریت
                   </div>
                 </div>
               </Link>
@@ -89,27 +90,27 @@ function StudentDashboard() {
         </Card>
 
         <Card className="rounded-3xl border-border/60 p-6 shadow-soft">
-          <h2 className="mb-4 text-lg font-semibold">Class info</h2>
+          <h2 className="mb-4 text-lg font-semibold">اطلاعات کلاس</h2>
           <dl className="space-y-3 text-sm">
-            <Row label="Class" value={data.className} />
-            <Row label="Code" value={<span className="font-mono">{data.classCode}</span>} />
-            <Row label="Age" value={data.ageGroup} />
-            <Row label="Teacher" value={data.teacher} />
+            <Row label="کلاس" value={data.className} />
+            <Row label="کد کلاس" value={<span className="font-mono">{data.classCode}</span>} />
+            <Row label="گروه سنی" value={data.ageGroup} />
+            <Row label="مربی" value={data.teacher} />
           </dl>
           <Button asChild variant="secondary" className="mt-5 w-full rounded-xl">
-            <Link to="/student/journal">Open thinking journal</Link>
+            <Link to="/student/journal">باز کردن دفترچه فکر</Link>
           </Button>
         </Card>
       </section>
 
       <section className="mt-8">
         <Card className="rounded-3xl border-border/60 p-6 shadow-soft">
-          <h2 className="mb-4 text-lg font-semibold">Recent attempts</h2>
+          <h2 className="mb-4 text-lg font-semibold">تلاش‌های اخیر</h2>
           {data.recentAttempts.length === 0 ? (
             <EmptyState
               icon={<Sparkles className="h-5 w-5" />}
-              title="No attempts yet"
-              description="Start a mission and your recent answers will show up here."
+              title="هنوز تلاشی ثبت نشده"
+              description="یک مأموریت شروع کن تا پاسخ‌های اخیرت اینجا نمایش داده شود."
             />
           ) : (
           <div className="divide-y divide-border/60">
@@ -121,7 +122,7 @@ function StudentDashboard() {
                 </div>
                 <div className="flex items-center gap-3">
                   <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${a.result === "Correct" ? "bg-success/15 text-success" : "bg-warning/20 text-warning-foreground"}`}>
-                    {a.result}
+                    {a.result === "Correct" ? "درست" : "دوباره تلاش کن"}
                   </span>
                   <span className="font-mono text-xs text-muted-foreground">+{a.score}</span>
                 </div>
@@ -136,27 +137,31 @@ function StudentDashboard() {
         <Card className="rounded-3xl border-border/60 p-6 shadow-soft">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="flex items-center gap-2 text-lg font-semibold">
-              <Award className="h-5 w-5 text-primary" /> Skill cards earned
+              <Award className="h-5 w-5 text-primary" /> کارت‌های مهارت
             </h2>
-            <span className="text-xs text-muted-foreground">{data.earnedCards.length} of 9</span>
+            <span className="text-xs text-muted-foreground">{data.earnedCards.length} از ۹</span>
           </div>
           <div className="grid gap-3 sm:grid-cols-3">
-            {data.earnedCards.map((s) => (
+            {data.earnedCards.map((s) => {
+              const skillFa = SKILL_LABELS_FA[s.name];
+              const lvlFa = SKILL_LEVEL_LABELS_FA[s.level];
+              return (
               <div key={s.id} className="rounded-2xl border border-border/60 bg-gradient-card p-4">
                 <div className="flex items-center justify-between">
                   <span className="text-2xl" aria-hidden>{s.emoji}</span>
-                  <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
+                  <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wider ${
                     s.level === "Gold" ? "bg-warning/20 text-warning-foreground" :
                     s.level === "Silver" ? "bg-muted text-foreground" :
                     "bg-accent/40 text-accent-foreground"
                   }`}>
-                    {s.level}
+                    {lvlFa}
                   </span>
                 </div>
-                <div className="mt-2 text-sm font-semibold">{s.name}</div>
-                <div className="text-xs text-muted-foreground">Earned {s.earnedOn}</div>
+                <div className="mt-2 text-sm font-semibold">{skillFa}</div>
+                <div className="text-xs text-muted-foreground">به دست آمده {s.earnedOn}</div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </Card>
       </section>

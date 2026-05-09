@@ -17,10 +17,10 @@ export const Route = createFileRoute("/student/journal")({
 });
 
 const PROMPTS = [
-  "What surprised you most today?",
-  "When would you ask a teacher or adult instead of AI?",
-  "What is one thing you'd double-check before believing it?",
-  "How would you explain this to a younger student?",
+  "امروز چه چیزی بیشتر از همه تو را شگفت‌زده کرد؟",
+  "کی به‌جای AI از معلم یا یک بزرگ‌تر می‌پرسی؟",
+  "یک چیزی که قبل از باور کردن دوباره بررسی می‌کنی چیست؟",
+  "این موضوع را چطور برای یک دانش‌آموز کوچک‌تر توضیح می‌دهی؟",
 ];
 
 function Journal() {
@@ -52,21 +52,21 @@ function Journal() {
     <main className="mx-auto max-w-5xl px-4 py-10 md:px-6">
       <header className="mb-8">
         <div className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1 text-xs font-medium">
-          <BookOpen className="h-3.5 w-3.5" /> Thinking Journal
+          <BookOpen className="h-3.5 w-3.5" /> دفترچه فکر
         </div>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight">Reflect on what you learned</h1>
+        <h1 className="mt-3 text-3xl font-bold tracking-tight">درباره چیزی که یاد گرفتی فکر کن</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Writing helps your thinking stick. Pick a prompt or write your own.
+          نوشتن به ماندگاری فکر کمک می‌کند. یک سؤال انتخاب کن یا خودت بنویس.
         </p>
       </header>
 
       <div className="grid gap-6 lg:grid-cols-3">
         <Card className="rounded-3xl border-border/60 p-6 shadow-soft lg:col-span-2">
           <div className="flex items-center gap-2 text-sm font-semibold">
-            <PenLine className="h-4 w-4 text-primary" /> New entry
+            <PenLine className="h-4 w-4 text-primary" /> یادداشت جدید
           </div>
           <div className="mt-4">
-            <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Prompt</div>
+            <div className="text-xs font-medium tracking-wider text-muted-foreground">سؤال راهنما</div>
             <div className="mt-2 flex flex-wrap gap-2">
               {PROMPTS.map((p) => (
                 <button
@@ -86,7 +86,7 @@ function Journal() {
             <Textarea
               value={entry}
               onChange={(e) => setEntry(e.target.value)}
-              placeholder="Write a few sentences..."
+              placeholder="چند جمله بنویس…"
               className="mt-3 min-h-[160px] rounded-xl border-border/60 bg-background"
               aria-invalid={!!errorMsg}
             />
@@ -97,29 +97,29 @@ function Journal() {
             )}
             {status === "saved" && (
               <p className="mt-2 flex items-center gap-1 text-xs text-success" role="status">
-                <CheckCircle2 className="h-3 w-3" /> Saved to your journal.
+                <CheckCircle2 className="h-3 w-3" /> در دفترچه‌ات ذخیره شد.
               </p>
             )}
             <div className="mt-3 flex items-center justify-between">
-              <div className="text-xs text-muted-foreground">{entry.length} characters</div>
+              <div className="text-xs text-muted-foreground">{entry.length} کاراکتر</div>
               <Button onClick={save} disabled={status === "saving"} className="rounded-xl shadow-soft">
                 {status === "saving" && <Loader2 className="h-4 w-4 animate-spin" />}
-                {status === "saving" ? "Saving…" : status === "saved" ? "Saved!" : "Save entry"}
+                {status === "saving" ? "در حال ذخیره…" : status === "saved" ? "ذخیره شد!" : "ذخیره یادداشت"}
               </Button>
             </div>
           </div>
         </Card>
 
         <Card className="rounded-3xl border-border/60 p-6 shadow-soft">
-          <h2 className="text-sm font-semibold">Past entries</h2>
+          <h2 className="text-sm font-semibold">یادداشت‌های قبلی</h2>
           {loading && <div className="mt-4"><LoadingState rows={2} variant="list" /></div>}
           {error && <div className="mt-4"><ErrorState error={error} onRetry={refetch} /></div>}
           {!loading && !error && entries.length === 0 && (
             <div className="mt-4">
               <EmptyState
                 icon={<BookOpen className="h-5 w-5" />}
-                title="No entries yet"
-                description="Pick a prompt and write your first reflection."
+                title="هنوز یادداشتی نداری"
+                description="یک سؤال انتخاب کن و اولین یادداشتت را بنویس."
               />
             </div>
           )}

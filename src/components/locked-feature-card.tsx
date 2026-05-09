@@ -18,7 +18,7 @@ export function LockedFeatureCard({ emoji = "🔒", title, description, unlockHi
       <div className="flex items-start justify-between">
         <div className="text-3xl opacity-60" aria-hidden>{emoji}</div>
         <span className="inline-flex items-center gap-1 rounded-full bg-background px-2.5 py-1 text-xs font-medium text-muted-foreground shadow-soft">
-          <Lock className="h-3 w-3" /> Coming soon
+          <Lock className="h-3 w-3" /> به‌زودی
         </span>
       </div>
       <h3 className="mt-3 text-base font-semibold text-foreground/80">{title}</h3>

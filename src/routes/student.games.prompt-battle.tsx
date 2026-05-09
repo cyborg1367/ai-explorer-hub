@@ -12,7 +12,7 @@ export const Route = createFileRoute("/student/games/prompt-battle")({
   component: PromptBattle,
 });
 
-const CRITERIA = ["Clarity", "Audience", "Detail", "Style", "Goal"];
+const CRITERIA = ["وضوح", "مخاطب", "جزئیات", "سبک", "هدف"];
 
 function PromptBattle() {
   const navigate = useNavigate();
@@ -77,9 +77,9 @@ function PromptBattle() {
   }
 
   const headline =
-    submitted?.result === "correct" ? "Strong choice — clearer prompt wins!" :
-    submitted?.result === "partial" ? "Not the strongest pick — but your upgrade helps" :
-    "The other prompt had better context";
+    submitted?.result === "correct" ? "انتخاب قوی — پرامپت روشن‌تر برنده شد!" :
+    submitted?.result === "partial" ? "قوی‌ترین انتخاب نبود — ولی بازنویسی‌ات کمک کرد" :
+    "پرامپت دیگر زمینه بهتری داشت";
 
   return (
     <MissionShell
@@ -96,18 +96,18 @@ function PromptBattle() {
       {/* Arena goal */}
       <section className="rounded-2xl border-2 border-dashed border-border/70 bg-gradient-card p-5">
         <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary">
-          <Target className="h-4 w-4" /> Arena goal
+          <Target className="h-4 w-4" /> هدف میدان
         </div>
         <h2 className="mt-2 text-lg font-bold md:text-xl">{round.goal}</h2>
         <p className="mt-3 inline-flex items-start gap-2 rounded-xl bg-background/70 p-2.5 text-[11px] text-muted-foreground">
           <Lightbulb className="mt-0.5 h-3.5 w-3.5 text-primary" />
-          A strong prompt usually names <strong className="text-foreground">who, what, how long,</strong> and <strong className="text-foreground">tone</strong>.
+          یک پرامپت قوی معمولاً <strong className="text-foreground">مخاطب، موضوع، طول</strong> و <strong className="text-foreground">لحن</strong> را مشخص می‌کند.
         </p>
       </section>
 
       {/* Versus */}
       <section className="mt-6">
-        <h3 className="text-sm font-semibold">Step 1 — Pick the stronger prompt</h3>
+        <h3 className="text-sm font-semibold">گام ۱ — پرامپت قوی‌تر را انتخاب کن</h3>
         <div className="mt-3 grid items-stretch gap-3 md:grid-cols-[1fr_auto_1fr]">
           {round.prompts.map((p, i) => {
             const active = pick === p.id;
@@ -129,7 +129,7 @@ function PromptBattle() {
                   </span>
                   {active && (
                     <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
-                      <Sparkles className="h-3 w-3" /> Selected
+                      <Sparkles className="h-3 w-3" /> انتخاب شد
                     </span>
                   )}
                 </div>
@@ -148,7 +148,7 @@ function PromptBattle() {
       {/* Criteria */}
       <section className="mt-6">
         <h3 className="text-sm font-semibold">
-          Step 2 — What makes it stronger? <span className="text-muted-foreground">(pick at least one)</span>
+          گام ۲ — چه چیزی این پرامپت را قوی‌تر کرده؟ <span className="text-muted-foreground">(حداقل یکی انتخاب کن)</span>
         </h3>
         <div className="mt-3 flex flex-wrap gap-2">
           {[...CRITERIA, ...PROMPT_REASONS].map((c) => {
@@ -175,13 +175,13 @@ function PromptBattle() {
       {/* Improve */}
       <section className="mt-6">
         <h3 className="text-sm font-semibold">
-          Step 3 — Upgrade the weaker prompt <span className="font-normal text-muted-foreground">(optional, +5)</span>
+          گام ۳ — پرامپت ضعیف‌تر را بهتر کن <span className="font-normal text-muted-foreground">(اختیاری، +۵)</span>
         </h3>
         <Textarea
           value={improved}
           onChange={(e) => setImproved(e.target.value)}
           disabled={!!submitted}
-          placeholder="Rewrite the weaker prompt with more clarity, audience, or detail…"
+          placeholder="پرامپت ضعیف‌تر را با وضوح، مخاطب یا جزئیات بیشتر بازنویسی کن…"
           className="mt-3 min-h-[90px] rounded-2xl"
         />
       </section>
@@ -189,10 +189,10 @@ function PromptBattle() {
       {!submitted ? (
         <div className="mt-7 flex items-center justify-between">
           <p className="text-xs text-muted-foreground">
-            {!pick ? "Pick a prompt to continue." : criteria.length === 0 ? "Add at least one reason." : "Ready when you are."}
+            {!pick ? "برای ادامه یک پرامپت انتخاب کن." : criteria.length === 0 ? "حداقل یک دلیل اضافه کن." : "هر وقت آماده‌ای ادامه بده."}
           </p>
           <Button onClick={submit} disabled={!pick || criteria.length === 0} size="lg" className="rounded-xl shadow-soft">
-            Lock in pick <ArrowRight className="ml-1 h-4 w-4" />
+            ثبت انتخاب <ArrowRight className="mr-1 h-4 w-4 rotate-180" />
           </Button>
         </div>
       ) : (
@@ -207,7 +207,7 @@ function PromptBattle() {
           />
           <div className="flex items-center justify-end">
             <Button onClick={next} size="lg" className="rounded-xl shadow-soft">
-              {index + 1 >= total ? "View arena summary" : "Next round"} <ArrowRight className="ml-1 h-4 w-4" />
+              {index + 1 >= total ? "مشاهده گزارش میدان" : "مرحله بعد"} <ArrowRight className="mr-1 h-4 w-4 rotate-180" />
             </Button>
           </div>
         </div>

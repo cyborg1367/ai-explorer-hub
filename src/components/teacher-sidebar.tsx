@@ -2,33 +2,33 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { LayoutDashboard, Users, Plus, BookOpen, GraduationCap, Sparkles, LogOut } from "lucide-react";
 
 const NAV = [
-  { to: "/teacher" as const, label: "Dashboard", icon: LayoutDashboard, exact: true, match: "/teacher" },
-  { to: "/teacher/class/$classId" as const, params: { classId: "demo" }, label: "Demo Class", icon: Users, exact: false, match: "/teacher/class" },
-  { to: "/teacher/create" as const, label: "New Class", icon: Plus, exact: false, match: "/teacher/create" },
+  { to: "/teacher" as const, label: "داشبورد", icon: LayoutDashboard, exact: true, match: "/teacher" },
+  { to: "/teacher/class/$classId" as const, params: { classId: "demo" }, label: "کلاس نمونه", icon: Users, exact: false, match: "/teacher/class" },
+  { to: "/teacher/create" as const, label: "کلاس جدید", icon: Plus, exact: false, match: "/teacher/create" },
 ];
 
 const SECONDARY = [
-  { to: "/student", label: "View as student", icon: GraduationCap },
-  { to: "/", label: "About the lab", icon: BookOpen },
+  { to: "/student", label: "نمایش به‌عنوان دانش‌آموز", icon: GraduationCap },
+  { to: "/", label: "درباره آزمایشگاه", icon: BookOpen },
 ] as const;
 
 export function TeacherSidebar() {
   const path = useRouterState({ select: (s) => s.location.pathname });
 
   return (
-    <aside className="hidden w-64 shrink-0 flex-col border-r border-border/60 bg-card/40 px-3 py-5 lg:flex">
+    <aside className="hidden w-64 shrink-0 flex-col border-l border-border/60 bg-card/40 px-3 py-5 lg:flex">
       <Link to="/" className="mb-6 flex items-center gap-2 px-3">
         <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-hero text-primary-foreground shadow-soft">
           <Sparkles className="h-5 w-5" />
         </span>
         <div className="leading-tight">
-          <div className="text-sm font-semibold">AI Thinking Lab</div>
-          <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Teacher</div>
+          <div className="text-sm font-semibold">آزمایشگاه AI</div>
+          <div className="text-[10px] tracking-wider text-muted-foreground">پنل مربی</div>
         </div>
       </Link>
 
-      <div className="px-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-        Workspace
+      <div className="px-3 text-[11px] font-semibold tracking-wider text-muted-foreground">
+        فضای کاری
       </div>
       <nav className="mt-2 flex flex-col gap-1">
         {NAV.map((n) => {
@@ -54,8 +54,8 @@ export function TeacherSidebar() {
         })}
       </nav>
 
-      <div className="mt-7 px-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-        Other
+      <div className="mt-7 px-3 text-[11px] font-semibold tracking-wider text-muted-foreground">
+        دیگر
       </div>
       <nav className="mt-2 flex flex-col gap-1">
         {SECONDARY.map((n) => {
@@ -79,7 +79,7 @@ export function TeacherSidebar() {
             P
           </div>
           <div className="min-w-0">
-            <div className="truncate text-sm font-medium">Ms. Parker</div>
+            <div className="truncate text-sm font-medium">خانم پارکر</div>
             <div className="truncate text-[11px] text-muted-foreground">ms.parker@school.org</div>
           </div>
         </div>
@@ -87,7 +87,7 @@ export function TeacherSidebar() {
           to="/login"
           className="mt-3 flex items-center justify-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-medium text-muted-foreground hover:bg-background hover:text-foreground"
         >
-          <LogOut className="h-3.5 w-3.5" /> Sign out
+          <LogOut className="h-3.5 w-3.5" /> خروج
         </Link>
       </div>
     </aside>

@@ -48,7 +48,7 @@ export function MicroFeedback({ result, headline, detail, cluesFound, pointsEarn
           {detail && <p className="mt-1 text-sm text-muted-foreground">{detail}</p>}
           {cluesFound && cluesFound.length > 0 && (
             <div className="mt-3">
-              <div className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Clues you spotted</div>
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">نشانه‌هایی که پیدا کردی</div>
               <div className="mt-1.5 flex flex-wrap gap-1.5">
                 {cluesFound.map((c) => (
                   <span key={c} className="rounded-full bg-background px-2.5 py-0.5 text-xs font-medium shadow-soft">

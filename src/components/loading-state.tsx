@@ -6,7 +6,7 @@ interface LoadingStateProps {
   variant?: "card" | "list" | "table";
 }
 
-export function LoadingState({ rows = 3, label = "Loading…", variant = "card" }: LoadingStateProps) {
+export function LoadingState({ rows = 3, label = "در حال بارگذاری…", variant = "card" }: LoadingStateProps) {
   if (variant === "list") {
     return (
       <div className="space-y-3" role="status" aria-label={label}>

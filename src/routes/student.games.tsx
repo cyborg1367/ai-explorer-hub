@@ -16,9 +16,9 @@ function GamesList() {
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 md:px-6">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">All thinking games</h1>
+        <h1 className="text-3xl font-bold tracking-tight">همه بازی‌های فکری</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Pick a mission. Each game grows different thinking skills.
+          یک مأموریت انتخاب کن. هر بازی مهارت‌های فکری متفاوتی را تقویت می‌کند.
         </p>
       </header>
 
@@ -27,7 +27,7 @@ function GamesList() {
       {data && (
         <>
           <section>
-            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-muted-foreground">Active</h2>
+            <h2 className="mb-3 text-sm font-semibold tracking-wider text-muted-foreground">فعال</h2>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {data.filter((g) => !g.locked).map((g) => (
                 <GameCard key={g.id} game={g} />
@@ -35,7 +35,7 @@ function GamesList() {
             </div>
           </section>
           <section className="mt-10">
-            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-muted-foreground">Coming soon</h2>
+            <h2 className="mb-3 text-sm font-semibold tracking-wider text-muted-foreground">به‌زودی</h2>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {data.filter((g) => g.locked).map((g) => (
                 <LockedFeatureCard
@@ -43,7 +43,7 @@ function GamesList() {
                   emoji={g.emoji}
                   title={g.title}
                   description={g.tagline}
-                  unlockHint="Unlocks once your class finishes the active games."
+                  unlockHint="پس از تمام شدن بازی‌های فعال کلاس، باز می‌شود."
                 />
               ))}
             </div>

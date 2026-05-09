@@ -32,7 +32,7 @@ export function GameCard({ game, variant = "full" }: GameCardProps) {
         <div className={variant === "compact" ? "text-3xl" : "text-4xl"}>{game.emoji}</div>
         {game.locked ? (
           <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
-            <Lock className="h-3 w-3" /> Locked
+            <Lock className="h-3 w-3" /> قفل
           </span>
         ) : (
           <StatusBadge status={game.status} />
@@ -56,12 +56,12 @@ export function GameCard({ game, variant = "full" }: GameCardProps) {
         <div className="mt-4">
           <Progress value={(game.progress / game.totalItems) * 100} className="h-1.5" />
           <div className="mt-1 text-xs text-muted-foreground">
-            {game.progress} / {game.totalItems} missions
+            {game.progress} از {game.totalItems} مأموریت
           </div>
         </div>
       )}
       {game.locked && (
-        <p className="mt-4 text-[11px] text-muted-foreground">Unlocks once your class finishes the active games.</p>
+        <p className="mt-4 text-[11px] text-muted-foreground">پس از تمام شدن بازی‌های فعال کلاس، باز می‌شود.</p>
       )}
     </Card>
   );

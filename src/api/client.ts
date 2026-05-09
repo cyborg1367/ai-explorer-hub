@@ -89,10 +89,10 @@ export const mockApi = {
   studentLogin: async (input: { classCode: string; nickname: string }) => {
     await delay(null, 250);
     if (!/^AI-\d{4}$/.test(input.classCode)) {
-      return fail({ code: "invalid_class_code", message: "Class code looks wrong. Ask your teacher.", field: "classCode" });
+      return fail({ code: "invalid_class_code", message: "کد کلاس درست نیست. از معلمت بپرس.", field: "classCode" });
     }
     if (!input.nickname.trim()) {
-      return fail({ code: "validation_error", message: "Pick a nickname so your teacher can recognise you.", field: "nickname" });
+      return fail({ code: "validation_error", message: "یک نام مستعار انتخاب کن تا معلمت تو را بشناسد.", field: "nickname" });
     }
     return ok({ token: "mock-student-token", nickname: input.nickname });
   },
@@ -101,7 +101,7 @@ export const mockApi = {
   getStudentDashboard: async (): Promise<ApiResult<StudentDashboardVM>> => {
     await delay(null);
     return ok({
-      nickname: "Aria",
+      nickname: "آریا",
       classCode: DEMO_CLASS.code,
       className: DEMO_CLASS.name,
       ageGroup: DEMO_CLASS.ageGroup,
@@ -134,7 +134,7 @@ export const mockApi = {
     const totalStudents = classes.reduce((s, c) => s + c.students, 0);
     const totalAttempts = classes.reduce((s, c) => s + c.attempts, 0);
     return ok({
-      teacherName: "Ms. Parker",
+      teacherName: "خانم پارکر",
       classes,
       totalStudents,
       totalAttempts,
@@ -150,7 +150,7 @@ export const mockApi = {
       return ok({ classRoom: EMPTY_CLASS, ageGroup: "12–14", roster: [] });
     }
     const cls = TEACHER_CLASSES.find((c) => c.id === classId);
-    if (!cls) return fail({ code: "not_found", message: "We could not find that class." });
+    if (!cls) return fail({ code: "not_found", message: "این کلاس پیدا نشد." });
     return ok({ classRoom: cls, ageGroup: DEMO_CLASS.ageGroup, roster: DEMO_STUDENTS });
   },
 
@@ -158,7 +158,7 @@ export const mockApi = {
   getStudentReport: async (studentId: string): Promise<ApiResult<StudentReportVM>> => {
     await delay(null);
     const student = DEMO_STUDENTS.find((s) => s.id === studentId);
-    if (!student) return fail({ code: "not_found", message: "Student report not found." });
+    if (!student) return fail({ code: "not_found", message: "گزارش این دانش‌آموز پیدا نشد." });
     return ok({
       student,
       className: DEMO_CLASS.name,
@@ -166,7 +166,7 @@ export const mockApi = {
       games: GAMES.filter((g) => !g.locked),
       recentAttempts: RECENT_ATTEMPTS,
       journalEntries: JOURNAL_ENTRIES,
-      parentSummary: `${student.nickname} is building strong critical thinking and fact-checking habits — noticing when AI sounds confident but is wrong, and asking clearer questions. Next focus: privacy awareness and fairness.`,
+      parentSummary: `${student.nickname} در حال ساختن عادت‌های قوی تفکر نقادانه و بررسی واقعیت است — می‌فهمد چه وقت AI با اطمینان اشتباه می‌گوید و سؤال‌های شفاف‌تری می‌پرسد. تمرکز بعدی: آگاهی از حریم خصوصی و انصاف.`,
     });
   },
 
@@ -174,13 +174,13 @@ export const mockApi = {
   createClass: async (input: { name: string; ageGroup: string; code: string }) => {
     await delay(null, 600);
     if (!/^AI-\d{4}$/.test(input.code)) {
-      return fail({ code: "validation_error", message: "Use the format AI-#### (e.g. AI-1020).", field: "code" });
+      return fail({ code: "validation_error", message: "از قالب AI-#### استفاده کن (مثلاً AI-1020).", field: "code" });
     }
     if (EXISTING_CLASS_CODES.includes(input.code)) {
-      return fail({ code: "duplicate_class_code", message: "This code is already used. Try regenerating it.", field: "code" });
+      return fail({ code: "duplicate_class_code", message: "این کد کلاس قبلاً استفاده شده است. دوباره بساز.", field: "code" });
     }
     if (input.name.trim().length < 3) {
-      return fail({ code: "validation_error", message: "Class name needs at least 3 characters.", field: "name" });
+      return fail({ code: "validation_error", message: "نام کلاس باید حداقل ۳ کاراکتر باشد.", field: "name" });
     }
     return ok({ id: "new", ...input });
   },
@@ -189,12 +189,12 @@ export const mockApi = {
   submitJournalEntry: async (input: { prompt: string; text: string; game?: string }) => {
     await delay(null, 400);
     if (input.text.trim().length < 8) {
-      return fail({ code: "validation_error", message: "Write a few more words so your reflection is meaningful.", field: "text" });
+      return fail({ code: "validation_error", message: "چند کلمه بیشتر بنویس تا یادداشتت معنی‌دار باشد.", field: "text" });
     }
     return ok({
       id: "j-new",
-      game: input.game ?? "Reflection",
-      date: "Just now",
+      game: input.game ?? "تأمل",
+      date: "همین حالا",
       prompt: input.prompt,
       text: input.text.trim(),
     });
