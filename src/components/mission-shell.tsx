@@ -21,17 +21,17 @@ interface MissionShellProps {
 export function MissionShell({
   role, roleEmoji, missionTitle, unitLabel, unitLabelPlural,
   step, total, meterLabel, meterValue, backTo = "/student/games",
-  backLabel = "Leave mission", children,
+  backLabel = "خروج از مأموریت", children,
 }: MissionShellProps) {
   const pct = Math.max(0, Math.min(100, meterValue));
   return (
     <main className="mx-auto max-w-5xl px-4 py-6 md:px-6 md:py-8">
       <div className="mb-4 flex items-center justify-between text-sm">
         <Link to={backTo} className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground">
-          <ArrowLeft className="h-4 w-4" /> {backLabel}
+          <ArrowLeft className="h-4 w-4 rotate-180" /> {backLabel}
         </Link>
         <div className="text-xs font-medium text-muted-foreground">
-          {unitLabel} {Math.min(step + 1, total)} of {total}
+          {unitLabel} {Math.min(step + 1, total)} از {total}
         </div>
       </div>
 
@@ -40,7 +40,7 @@ export function MissionShell({
           <div className="flex items-center justify-between gap-4">
             <div className="min-w-0">
               <div className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider backdrop-blur">
-                <span aria-hidden>{roleEmoji}</span> Role: {role}
+                <span aria-hidden>{roleEmoji}</span> نقش: {role}
               </div>
               <h1 className="mt-2 truncate text-xl font-bold md:text-2xl">{missionTitle}</h1>
             </div>
