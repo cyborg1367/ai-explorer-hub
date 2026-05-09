@@ -1,4 +1,5 @@
 import type { GameStatus } from "@/lib/mock-data";
+import { STATUS_LABELS_FA } from "@/lib/mock-data";
 
 export function StatusBadge({ status }: { status: GameStatus }) {
   const map: Record<GameStatus, string> = {
@@ -9,7 +10,7 @@ export function StatusBadge({ status }: { status: GameStatus }) {
   return (
     <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ${map[status]}`}>
       <span className={`h-1.5 w-1.5 rounded-full ${status === "Completed" ? "bg-success" : status === "In Progress" ? "bg-warning" : "bg-muted-foreground"}`} />
-      {status}
+      {STATUS_LABELS_FA[status]}
     </span>
   );
 }
