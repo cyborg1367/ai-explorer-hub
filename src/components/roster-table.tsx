@@ -7,15 +7,15 @@ import type { Student } from "@/lib/mock-data";
 export function RosterTable({ students }: { students: Student[] }) {
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-sm">
-        <thead className="bg-muted/40 text-xs uppercase tracking-wider text-muted-foreground">
+      <table className="w-full text-sm text-right">
+        <thead className="bg-muted/40 text-xs tracking-wider text-muted-foreground">
           <tr>
-            <th className="px-5 py-3 text-left font-medium">Nickname</th>
-            <th className="px-5 py-3 text-left font-medium">Attempts</th>
-            <th className="px-5 py-3 text-left font-medium">Latest activity</th>
-            <th className="px-5 py-3 text-left font-medium">Trust Light</th>
-            <th className="px-5 py-3 text-left font-medium">Prompt Battle</th>
-            <th className="px-5 py-3 text-right font-medium">Score</th>
+            <th className="px-5 py-3 text-right font-medium">نام مستعار</th>
+            <th className="px-5 py-3 text-right font-medium">تعداد تلاش</th>
+            <th className="px-5 py-3 text-right font-medium">آخرین فعالیت</th>
+            <th className="px-5 py-3 text-right font-medium">آزمایشگاه اعتماد</th>
+            <th className="px-5 py-3 text-right font-medium">میدان پرامپت</th>
+            <th className="px-5 py-3 text-left font-medium">امتیاز</th>
             <th className="px-5 py-3"></th>
           </tr>
         </thead>
@@ -34,11 +34,11 @@ export function RosterTable({ students }: { students: Student[] }) {
               <td className="px-5 py-4 text-muted-foreground">{s.latestActivity}</td>
               <td className="px-5 py-4"><StatusBadge status={s.trustLight} /></td>
               <td className="px-5 py-4"><StatusBadge status={s.promptBattle} /></td>
-              <td className="px-5 py-4 text-right font-semibold">{s.totalScore}</td>
-              <td className="px-5 py-4 text-right">
+              <td className="px-5 py-4 text-left font-semibold">{s.totalScore}</td>
+              <td className="px-5 py-4 text-left">
                 <Button asChild variant="ghost" size="sm" className="rounded-full">
                   <Link to="/teacher/student/$studentId" params={{ studentId: s.id }}>
-                    Report <ArrowRight className="ml-1 h-3.5 w-3.5" />
+                    گزارش <ArrowRight className="mr-1 h-3.5 w-3.5 rotate-180" />
                   </Link>
                 </Button>
               </td>
