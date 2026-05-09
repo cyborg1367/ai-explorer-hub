@@ -13,9 +13,9 @@ export const Route = createFileRoute("/student/games/trust-light")({
 });
 
 const LIGHTS = [
-  { value: "green" as const, label: "Trust it", color: "bg-success", ring: "ring-success", desc: "Evidence checks out" },
-  { value: "yellow" as const, label: "Check first", color: "bg-warning", ring: "ring-warning", desc: "Suspicious — verify" },
-  { value: "red" as const, label: "Do not trust", color: "bg-danger", ring: "ring-danger", desc: "Likely false" },
+  { value: "green" as const, label: "اعتماد کن", color: "bg-success", ring: "ring-success", desc: "نشانه‌ها درست است" },
+  { value: "yellow" as const, label: "اول بررسی کن", color: "bg-warning", ring: "ring-warning", desc: "مشکوک — بررسی کن" },
+  { value: "red" as const, label: "اعتماد نکن", color: "bg-danger", ring: "ring-danger", desc: "احتمالاً نادرست" },
 ];
 
 function TrustLight() {
@@ -79,9 +79,9 @@ function TrustLight() {
   }
 
   const headline =
-    submitted?.result === "correct" ? "Case solved — strong evidence!" :
-    submitted?.result === "partial" ? "Close call — some evidence missing" :
-    "Suspicious clue missed — review the case";
+    submitted?.result === "correct" ? "پرونده حل شد — نشانه‌های قوی!" :
+    submitted?.result === "partial" ? "نزدیک بود — چند نشانه را جا انداختی" :
+    "یک نشانه مهم از دست رفت — پرونده را دوباره بررسی کن";
 
   return (
     <MissionShell
@@ -98,23 +98,23 @@ function TrustLight() {
       {/* Case file */}
       <section className="rounded-2xl border-2 border-dashed border-border/70 bg-gradient-card p-5">
         <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary">
-          <FileText className="h-4 w-4" /> Case file #{index + 1}
+          <FileText className="h-4 w-4" /> پرونده شماره {index + 1}
         </div>
-        <h2 className="mt-2 text-lg font-bold md:text-xl">Question under investigation</h2>
+        <h2 className="mt-2 text-lg font-bold md:text-xl">سؤال در حال بررسی</h2>
         <p className="mt-1 text-sm">{scenario.question}</p>
         <div className="mt-4 rounded-2xl border border-border/60 bg-background/80 p-4">
-          <div className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">AI answered</div>
+          <div className="text-[11px] font-semibold tracking-wider text-muted-foreground">پاسخ AI</div>
           <p className="mt-1 text-sm leading-relaxed">{scenario.aiAnswer}</p>
         </div>
         <p className="mt-3 inline-flex items-start gap-2 rounded-xl bg-background/70 p-2.5 text-[11px] text-muted-foreground">
           <Lightbulb className="mt-0.5 h-3.5 w-3.5 text-primary" />
-          Detective tip: look for dates, names, and claims you can verify.
+          نکته کارآگاهی: به دنبال تاریخ‌ها، نام‌ها و ادعاهایی باش که بتوانی تأیید کنی.
         </p>
       </section>
 
       {/* Decision */}
       <section className="mt-6">
-        <h3 className="text-sm font-semibold">Step 1 — Choose a trust signal</h3>
+        <h3 className="text-sm font-semibold">گام ۱ — یک چراغ اعتماد انتخاب کن</h3>
         <div className="mt-3 grid gap-3 sm:grid-cols-3">
           {LIGHTS.map((l) => {
             const active = light === l.value;
@@ -142,7 +142,7 @@ function TrustLight() {
       {/* Evidence */}
       <section className="mt-6">
         <h3 className="text-sm font-semibold">
-          Step 2 — Collect evidence <span className="text-muted-foreground">(pick at least one)</span>
+          گام ۲ — نشانه‌ها را جمع کن <span className="text-muted-foreground">(حداقل یکی انتخاب کن)</span>
         </h3>
         <div className="mt-3 flex flex-wrap gap-2">
           {TRUST_REASONS.map((r) => {
@@ -169,13 +169,13 @@ function TrustLight() {
       {/* Optional explanation */}
       <section className="mt-6">
         <h3 className="text-sm font-semibold">
-          Step 3 — Detective notes <span className="font-normal text-muted-foreground">(optional)</span>
+          گام ۳ — یادداشت کارآگاهی <span className="font-normal text-muted-foreground">(اختیاری)</span>
         </h3>
         <Textarea
           value={explanation}
           onChange={(e) => setExplanation(e.target.value)}
           disabled={!!submitted}
-          placeholder="Write a short note about what made you suspicious or confident…"
+          placeholder="یک یادداشت کوتاه درباره دلیل شک یا اطمینانت بنویس…"
           className="mt-3 min-h-[90px] rounded-2xl"
         />
       </section>
@@ -184,10 +184,10 @@ function TrustLight() {
       {!submitted ? (
         <div className="mt-7 flex items-center justify-between">
           <p className="text-xs text-muted-foreground">
-            {!light ? "Pick a trust signal to continue." : reasons.length === 0 ? "Add at least one piece of evidence." : "Ready when you are."}
+            {!light ? "برای ادامه یک چراغ اعتماد انتخاب کن." : reasons.length === 0 ? "حداقل یک نشانه اضافه کن." : "هر وقت آماده‌ای ادامه بده."}
           </p>
           <Button onClick={submit} disabled={!light || reasons.length === 0} size="lg" className="rounded-xl shadow-soft">
-            Submit case <ArrowRight className="ml-1 h-4 w-4" />
+            ثبت پرونده <ArrowRight className="mr-1 h-4 w-4 rotate-180" />
           </Button>
         </div>
       ) : (
@@ -202,7 +202,7 @@ function TrustLight() {
           />
           <div className="flex items-center justify-end">
             <Button onClick={next} size="lg" className="rounded-xl shadow-soft">
-              {index + 1 >= total ? "View mission report" : "Next case"} <ArrowRight className="ml-1 h-4 w-4" />
+              {index + 1 >= total ? "مشاهده گزارش مأموریت" : "پرونده بعدی"} <ArrowRight className="mr-1 h-4 w-4 rotate-180" />
             </Button>
           </div>
         </div>
