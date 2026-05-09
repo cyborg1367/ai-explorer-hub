@@ -11,7 +11,7 @@ export const Route = createFileRoute("/student")({
           <Link to="/" className="hidden items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-xs font-medium text-muted-foreground hover:bg-secondary md:inline-flex">
             <span className="font-mono">{DEMO_CLASS.code}</span>
             <span>·</span>
-            <span>Aria</span>
+            <span>آریا</span>
           </Link>
         }
       />
