@@ -22,9 +22,9 @@ export const Route = createFileRoute("/student/summary")({
 function Summary() {
   const s = useSearch({ from: "/student/summary" });
   const meta = MISSIONS[s.game as "trust-light" | "prompt-battle"];
-  const reportTitle = s.game === "trust-light" ? "Mission Report" : "Arena Summary";
+  const reportTitle = s.game === "trust-light" ? "گزارش مأموریت" : "گزارش میدان";
   const accuracy = s.total > 0 ? Math.round((s.solved / s.total) * 100) : 0;
-  const evidenceLabel = s.game === "trust-light" ? "Evidence collected" : "Prompts upgraded";
+  const evidenceLabel = s.game === "trust-light" ? "نشانه‌های جمع‌شده" : "پرامپت‌های بهبودیافته";
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-10 md:px-6 md:py-12">
@@ -35,7 +35,7 @@ function Summary() {
           </div>
           <h1 className="mt-3 text-3xl font-bold md:text-4xl">{meta.missionTitle}</h1>
           <p className="mt-2 text-sm opacity-90">
-            You completed every {meta.unitLabel.toLowerCase()} as a {meta.role}.
+            همه {meta.unitLabelPlural} را در نقش {meta.role} کامل کردی.
           </p>
 
           {/* Badge */}
@@ -43,29 +43,29 @@ function Summary() {
             <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white text-4xl shadow-soft">
               {meta.badgeEmoji}
             </div>
-            <div className="mt-3 text-[11px] uppercase tracking-wider opacity-90">Badge earned</div>
+            <div className="mt-3 text-[11px] tracking-wider opacity-90">نشان به دست آمده</div>
             <div className="text-base font-bold">{meta.badgeName}</div>
           </div>
         </div>
 
         <div className="grid gap-4 p-6 sm:grid-cols-4 md:p-8">
-          <Stat icon={<Target className="h-5 w-5 text-success" />} label={`${meta.unitLabelPlural} solved`} value={`${s.solved}/${s.total}`} />
-          <Stat icon={<Sparkles className="h-5 w-5 text-primary" />} label="Skill points" value={`+${s.score}`} />
-          <Stat icon={<BookOpen className="h-5 w-5 text-accent-foreground" />} label="Accuracy" value={`${accuracy}%`} />
+          <Stat icon={<Target className="h-5 w-5 text-success" />} label={`${meta.unitLabelPlural} حل‌شده`} value={`${s.solved}/${s.total}`} />
+          <Stat icon={<Sparkles className="h-5 w-5 text-primary" />} label="امتیاز مهارت" value={`+${s.score}`} />
+          <Stat icon={<BookOpen className="h-5 w-5 text-accent-foreground" />} label="دقت" value={`${accuracy}٪`} />
           <Stat icon={<Award className="h-5 w-5 text-warning-foreground" />} label={evidenceLabel} value={String(s.evidence)} />
         </div>
 
         <div className="border-t border-border/60 p-6 md:p-8">
-          <h2 className="text-sm font-semibold">Skills you practiced</h2>
+          <h2 className="text-sm font-semibold">مهارت‌هایی که تمرین کردی</h2>
           <div className="mt-3 flex flex-wrap gap-2">
-            {meta.skills.map((sk: string) => (
-              <span key={sk} className="rounded-full bg-secondary px-3 py-1 text-xs font-medium">{sk}</span>
+            {meta.skills.map((sk) => (
+              <span key={sk} className="rounded-full bg-secondary px-3 py-1 text-xs font-medium">{SKILL_LABELS_FA[sk]}</span>
             ))}
           </div>
 
           {/* Suggested next mission */}
           <div className="mt-6 rounded-2xl border border-border/60 bg-gradient-card p-5">
-            <div className="text-[11px] font-semibold uppercase tracking-wider text-primary">Suggested next mission</div>
+            <div className="text-[11px] font-semibold tracking-wider text-primary">مأموریت پیشنهادی بعدی</div>
             <div className="mt-1 flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <span className="text-2xl" aria-hidden>{meta.nextMission.emoji}</span>
@@ -74,16 +74,16 @@ function Summary() {
                   <div className="text-xs text-muted-foreground">{meta.nextMission.tagline}</div>
                 </div>
               </div>
-              <span className="rounded-full bg-muted px-2.5 py-1 text-[10px] font-medium text-muted-foreground">Coming soon</span>
+              <span className="rounded-full bg-muted px-2.5 py-1 text-[10px] font-medium text-muted-foreground">به‌زودی</span>
             </div>
           </div>
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-between">
             <Button asChild variant="outline" className="rounded-xl">
-              <Link to="/student/journal">Write a reflection</Link>
+              <Link to="/student/journal">نوشتن یادداشت فکری</Link>
             </Button>
             <Button asChild size="lg" className="rounded-xl shadow-soft">
-              <Link to="/student/games">Back to missions <ArrowRight className="ml-1 h-4 w-4" /></Link>
+              <Link to="/student/games">بازگشت به مأموریت‌ها <ArrowRight className="mr-1 h-4 w-4 rotate-180" /></Link>
             </Button>
           </div>
         </div>
