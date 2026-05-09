@@ -7,6 +7,7 @@ import { LoadingState } from "@/components/loading-state";
 import { ErrorState } from "@/components/error-state";
 import { useMockQuery } from "@/hooks/use-mock-query";
 import { mockApi } from "@/api/client";
+import { SKILL_LABELS_FA } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/teacher/")({
   head: () => ({ meta: [{ title: "Teacher dashboard — AI Thinking Lab" }] }),
